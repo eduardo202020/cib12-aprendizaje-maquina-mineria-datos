@@ -10,6 +10,24 @@ venv/
 *.log
 *.zip
 
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.gz
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.vrb
+
 # OS / editor
 .DS_Store
 Thumbs.db
