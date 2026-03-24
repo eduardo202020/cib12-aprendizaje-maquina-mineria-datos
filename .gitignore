@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Data and generated artifacts
+*.tmp
+*.log
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Keep PDFs tracked only when they are final deliverables
+# Remove these lines if quieres versionar borradores pesados
+# *.pdf
