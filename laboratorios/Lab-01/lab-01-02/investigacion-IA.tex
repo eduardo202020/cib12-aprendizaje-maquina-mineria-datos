@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage{soulutf8}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+\onehalfspacing
+
+% ====== Colores semánticos ======
+\newcommand{\ESP}[1]{{\sethlcolor{magenta!30}\hl{#1}}}     % Alcance espacial
+\newcommand{\OBJ}[1]{{\sethlcolor{green!30}\hl{#1}}}       % Objeto / servicio
+\newcommand{\VD}[1]{{\sethlcolor{yellow!35}\hl{#1}}}       % Variable dependiente
+\newcommand{\TEC}[1]{{\sethlcolor{cyan!30}\hl{#1}}}        % Tecnología / señales
+\newcommand{\VI}[1]{{\sethlcolor{orange!35}\hl{#1}}}       % Variable independiente
+\newcommand{\PROB}[1]{{\sethlcolor{red!25}\hl{#1}}}        % Problema crítico
+\newcommand{\TEMP}[1]{{\sethlcolor{teal!25}\hl{#1}}}       % Alcance temporal
+
+\begin{document}
+
+\section*{Ejemplo de Sistematización}
+
+\subsection*{Diagnóstico}
+
+\textbf{LÍNEA DE INVESTIGACIÓN:} Inteligencia Artificial y Comunicación Inalámbrica.
+
+En los \ESP{museos y espacios culturales}, el \OBJ{servicio de guía virtual} apoyado en
+\TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} presenta limitaciones para ofrecer
+información contextualizada y oportuna al visitante, debido a la \PROB{baja precisión de localización indoor},
+la \PROB{heterogeneidad de dispositivos}, la \PROB{inestabilidad del RSSI}, el
+\PROB{efecto multipath} y las \PROB{variaciones temporales del entorno inalámbrico}.
+Esta situación dificulta identificar de manera confiable la sala, zona u objeto próximo al usuario,
+afecta la activación correcta de la guía hablada y reduce la \VD{calidad del servicio de guía virtual}
+dentro del recorrido museográfico.
+
+\vspace{0.5em}
+\textbf{Tema General:}
+
+\ESP{Museos y espacios culturales}
+
+\vspace{0.5em}
+\textbf{Temas Particulares:}
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \OBJ{Servicios de guía virtual} en \ESP{museos y espacios culturales}
+    \item \OBJ{Servicios de guía virtual} con \TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales}
+    \item \OBJ{Servicios de guía virtual} con detección de proximidad y \PROB{localización indoor} en \ESP{museos y espacios culturales}
+\end{enumerate}
+
+\textbf{Temas Específicos:}
+\begin{enumerate}[leftmargin=1.2cm]
+    \item \VD{Baja calidad del servicio de guía virtual} en \OBJ{servicios de guía virtual} con \TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales}
+    \item \PROB{Baja precisión de localización indoor} en \OBJ{servicios de guía virtual} con \TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales}
+    \item \PROB{Alta sensibilidad a la heterogeneidad de dispositivos, inestabilidad del RSSI, efecto multipath y variaciones temporales} en \OBJ{servicios de guía virtual} con \TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales}
+\end{enumerate}
+
+\textbf{Problema de Estudio:}
+
+\VD{Baja calidad del servicio de guía virtual} en \OBJ{servicios de guía virtual} con
+\TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales},
+\TEMP{2026}
+
+\textbf{Título Preliminar de la Tesis:}
+
+\VD{Calidad del servicio de guía virtual} en \OBJ{servicios de guía virtual} con
+\TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales},
+\TEMP{2026}
+
+\vspace{1em}
+\textbf{Antecedentes Bibliográficos}
+
+Gufran, D., Tiku, S., \& Pasricha, S. (2023). \textit{STELLAR: Siamese Multiheaded Attention Neural Networks for Overcoming Temporal Variations and Device Heterogeneity With} \OBJ{Indoor Localization}. \textit{IEEE Journal of Indoor and Seamless Positioning and Navigation}.
+
+Singampalli, A., Sri Lakshmi, G. R. R., \& Pasricha, S. (2024). \textit{xKAN: Explainable AI for Smartphone Based} \OBJ{Indoor Localization} \textit{using} \TEC{Wi-Fi Fingerprinting}. \textit{IEEE Access}.
+
+Tiku, S., Gufran, D., \& Pasricha, S. (2022). \textit{Multi-Head Attention Neural Network for Smartphone Invariant} \OBJ{Indoor Localization}. En \textit{International Conference on Indoor Positioning and Indoor Navigation (IPIN)}.
+
+Supanakoon, P., \& Promwong, S. (2021). \textit{Evaluation of Distance Error with} \TEC{Bluetooth Low Energy} \textit{Transmission Model for} \OBJ{Indoor Positioning}. \textit{Journal of Mobile Multimedia}, 17(4), 707--722.
+
+Xu, S., Chen, R., Guo, G., Li, Z., Qian, L., Ye, F., Liu, Z., \& Huang, L. (2021). \textit{\TEC{Bluetooth}, Floor-Plan, and Microelectromechanical Systems-Assisted Wide-Area Audio} \OBJ{Indoor Localization} \textit{System: Apply to Smartphones}. \textit{IEEE Transactions on Industrial Electronics}.
+
+Tsuchiya, Y., Suga, N., Uruma, K., \& Fujisawa, M. (2024). \textit{Integration of CSI and Camera Image for} \OBJ{Indoor Wireless Localization}. \textit{IEEE Access}.
+
+Yaman, I., Tian, G., Tegler, E., Gulin, J., Challa, N., Tufvesson, F., Edfors, O., Åström, K., Malkowsky, S., \& Liu, L. (2024). \textit{LuViRA Dataset Validation and Discussion: Comparing Vision, Radio, and Audio Sensors for} \OBJ{Indoor Localization}. \textit{IEEE Journal of Indoor and Seamless Positioning and Navigation}.
+
+Salamah, A. H., Tamazin, M., Sharkas, M. A., \& Khedr, M. (2016). \textit{An Enhanced} \TEC{WiFi} \OBJ{Indoor Localization System} \textit{Based on Machine Learning}. En \textit{International Conference on Indoor Positioning and Indoor Navigation (IPIN)}.
+
+Zhang, J., Sun, J., Wang, H., Xiao, W., \& Tan, L. (2017). \textit{Large-Scale} \TEC{WiFi} \OBJ{Indoor Localization} \textit{via Extreme Learning Machine}. En \textit{Proceedings of the 36th Chinese Control Conference}.
+
+Aguilar Herrera, J. C., Plöger, P. G., Hinkenjann, A., Maiero, J., Flores, M., \& Ramos, A. (2014). \textit{Pedestrian} \OBJ{Indoor Positioning} \textit{Using Smartphone Multi-sensing, Radio Beacons, User Positions Probability Map and IndoorOSM Floor Plan Representation}. En \textit{International Conference on Indoor Positioning and Indoor Navigation (IPIN)}.
+
+\vspace{1em}
+\textbf{Título Tentativo de la Tesis:}
+
+\VI{Modelo de aprendizaje profundo con mecanismos de atención} para mejorar la
+\VD{calidad del servicio de guía virtual} en \OBJ{servicios de guía virtual} con
+\TEC{aplicaciones móviles e IoT con señales Wi-Fi/BLE} en \ESP{museos y espacios culturales},
+\TEMP{2026}
+
+\vspace{1em}
+\textbf{Variable Independiente:} \VI{Modelo de aprendizaje profundo con mecanismos de atención}
+
+\textbf{Variable Dependiente:} \VD{Calidad del servicio de guía virtual}
+
+\textbf{Objeto de Estudio:} \OBJ{Servicios de guía virtual}
+
+\textbf{Alcance Espacial:} \ESP{Museos y espacios culturales}
+
+\textbf{Alcance Temporal:} \TEMP{2026}
+
+\end{document}

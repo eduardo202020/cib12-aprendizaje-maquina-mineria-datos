@@ -36,7 +36,7 @@ El silabo combina:
 - agrega el dataset o su referencia en `datos/`;
 - desarrolla el analisis en `notebooks/` o `src/`;
 - guarda tablas, graficos y metricas en `resultados/`;
-- redacta el informe en `informe/informe.md` o `informe/informe.tex`;
+- organiza los informes en `lab-01-01/informe/` y `lab-01-02/`;
 - prepara la exposicion en `presentacion/diapositivas.md`;
 - organiza la sustentacion en `presentacion/guion.md`;
 - exporta la version final a PDF.
