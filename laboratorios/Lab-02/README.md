@@ -1,19 +1,32 @@
-# Plantilla de Laboratorio CIB12
+# Lab-02
 
-Usa esta carpeta para desarrollar el siguiente laboratorio del curso `CIB12 - Aprendizaje de Maquina y Mineria de Datos`.
+Este laboratorio fue reorganizado en dos partes:
 
-## Archivos base
+## Part-01
 
-- `ficha-curso.md`: datos clave del trabajo;
-- `informe/informe.md`: informe en Markdown;
-- `informe/informe.tex`: informe en LaTeX;
-- `presentacion/diapositivas.md`: estructura de diapositivas;
-- `presentacion/guion.md`: guion de sustentacion.
+Contiene el trabajo de analisis del paper:
 
-## Flujo corto
+- eleccion del paper
+- explicacion teorica
+- presentacion en LaTeX y PDF
+- guion de exposicion
+- informe base
+- documentos de referencia del paper y la guia
 
-1. Llena `ficha-curso.md`.
-2. Trabaja notebooks, codigo y resultados.
-3. Redacta el informe.
-4. Prepara la exposicion.
-5. Exporta a PDF y guarda la version final.
+Ruta: `laboratorios/Lab-02/Part-01`
+
+## Part-02
+
+Contiene el espacio de implementacion y reproduccion experimental:
+
+- `src` para codigo fuente
+- `notebooks` para exploracion o pruebas
+- `datos` para datasets o archivos procesados
+- `resultados` para metricas, figuras y salidas
+
+Ruta: `laboratorios/Lab-02/Part-02`
+
+## Nota
+
+La `Part-01` corresponde a la eleccion, analisis y presentacion del paper.  
+La `Part-02` queda reservada para la implementacion y reproduccion del trabajo.
