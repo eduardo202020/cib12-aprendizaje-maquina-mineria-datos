@@ -1,0 +1,34 @@
+{
+  "fingerprint_name": "lab02_ble_ferrero",
+  "sensor_count": 12,
+  "sensors": [
+    "sensor10",
+    "sensor11",
+    "sensor12",
+    "sensor20",
+    "sensor21",
+    "sensor22",
+    "sensor30",
+    "sensor31",
+    "sensor32",
+    "sensor40",
+    "sensor41",
+    "sensor42"
+  ],
+  "variants": {
+    "with_empty_values": {
+      "min_valid_sensors": 10,
+      "offline_rows": 213558,
+      "online_rows": 662,
+      "offline_path": "datos\\processed\\fingerprints\\lab02_ble_ferrero\\with_empty_values.csv",
+      "online_path": "datos\\processed\\online\\lab02_ble_ferrero\\with_empty_values.csv"
+    },
+    "without_empty_values": {
+      "min_valid_sensors": 12,
+      "offline_rows": 141713,
+      "online_rows": 486,
+      "offline_path": "datos\\processed\\fingerprints\\lab02_ble_ferrero\\without_empty_values.csv",
+      "online_path": "datos\\processed\\online\\lab02_ble_ferrero\\without_empty_values.csv"
+    }
+  }
+}

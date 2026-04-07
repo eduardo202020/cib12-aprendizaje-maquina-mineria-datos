@@ -36,3 +36,7 @@ Thumbs.db
 # Keep PDFs tracked only when they are final deliverables
 # Remove these lines if quieres versionar borradores pesados
 # *.pdf
+
+# Lab-02 external dependencies and raw dataset
+laboratorios/Lab-02/Part-02/vendor/
+laboratorios/Lab-02/Part-02/datos/raw/
