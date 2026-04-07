@@ -313,6 +313,23 @@ Debe incluir como minimo:
 - figuras
 - capturas o pruebas del proceso
 
+### Estado actual de ejecucion
+
+La ejecucion ya se realizo con un entorno local compatible basado en `Python 3.11` y `TensorFlow 2.15.1`.
+
+Se completaron estas fases:
+
+- generacion de fingerprints offline y online,
+- entrenamiento de `M2` con `with_empty_values`,
+- entrenamiento de `M2` con `without_empty_values`,
+- evaluacion online de ambas variantes.
+
+Artefactos generados:
+
+- modelos en `resultados/models/M2/...`
+- metricas en `resultados/metrics/...`
+- entorno local en `.venv311`
+
 ---
 
 ## 6. Verificacion metodologica
@@ -329,9 +346,46 @@ Tambien debe declararse una limitacion importante:
 
 - la ficha editorial del articulo indica “No data was used”, pero el propio paper si describe un dataset publico y repositorios asociados. Esto debe mencionarse como una limitacion de trazabilidad documental y no como un error de implementacion.
 
+## 7. Resultados obtenidos en esta reproduccion
+
+### Variante with_empty_values
+
+- media: `2.3690 m`
+- mediana: `2.1413 m`
+- minimo: `0.0743 m`
+- maximo: `15.9757 m`
+
+Comparacion con el paper:
+
+- paper: media `2.0368 m`, mediana `1.8199 m`
+- reproduccion: media `2.3690 m`, mediana `2.1413 m`
+
+### Variante without_empty_values
+
+- media: `2.0750 m`
+- mediana: `1.8430 m`
+- minimo: `0.0517 m`
+- maximo: `8.1161 m`
+
+Comparacion con el paper:
+
+- paper: media `2.0559 m`, mediana `1.7745 m`
+- reproduccion: media `2.0750 m`, mediana `1.8430 m`
+
+### Interpretacion
+
+La reproduccion de `without_empty_values` quedo muy cercana a los valores del paper, lo que respalda que el pipeline general es consistente.
+
+La reproduccion de `with_empty_values` quedo algo por encima de lo reportado, lo cual sugiere diferencias posibles en:
+
+- el preprocesamiento exacto,
+- la construccion de ventanas,
+- la seleccion final de fingerprints,
+- o detalles no completamente especificados por los autores.
+
 ---
 
-## 7. Recomendacion practica de ejecucion
+## 8. Recomendacion practica de ejecucion
 
 Para resolver correctamente la Parte II:
 
@@ -340,7 +394,7 @@ Para resolver correctamente la Parte II:
 - no empezar por modelos mas complejos como M8,
 - no rehacer AutoML completo en esta primera iteracion.
 
-## 8. Conclusión operativa
+## 9. Conclusion operativa
 
 La mejor forma de cumplir la Parte II del laboratorio es reproducir el pipeline central del paper de forma ordenada y justificable:
 
