@@ -19,6 +19,14 @@ Aqui se desarrollara la Parte II del laboratorio:
 - entrenamiento y evaluacion
 - comparacion con los resultados reportados en el paper
 
+## Entregables de la Parte II
+
+- `informe/informe.tex`: informe tecnico en LaTeX
+- `informe/informe.pdf`: informe tecnico compilado en PDF
+- `evidencias/README.md`: resumen de evidencias de ejecucion
+- `evidencias/metricas-reproduccion.csv`: tabla de resultados
+- `evidencias/comandos-ejecutados.txt`: comandos principales del pipeline
+
 ## Estado actual
 
 Ya se ejecuto la fase de preparacion del pipeline:
