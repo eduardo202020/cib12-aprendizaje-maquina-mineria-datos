@@ -3,7 +3,11 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 .venv/
+.venv311/
 venv/
+laboratorios/Lab-02/Part-02/.venv311/
+laboratorios/Lab-02/Part-02/.venv311/Lib/
+laboratorios/Lab-02/Part-02/.venv311/Scripts/
 
 # Data and generated artifacts
 *.tmp
@@ -40,3 +44,8 @@ Thumbs.db
 # Lab-02 external dependencies and raw dataset
 laboratorios/Lab-02/Part-02/vendor/
 laboratorios/Lab-02/Part-02/datos/raw/
+laboratorios/Lab-02/Part-02/datos/processed/
+
+# Lab-02 generated training artifacts
+laboratorios/Lab-02/Part-02/resultados/models/
+laboratorios/Lab-02/Part-02/resultados/metrics/
