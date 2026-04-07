@@ -98,11 +98,23 @@ python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_
 python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
 ```
 
+Entrenar una variante experimental con semilla fija:
+
+```powershell
+python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --seed 21 --tag seed21
+```
+
 Evaluar M2:
 
 ```powershell
 python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values
 python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
+```
+
+Evaluar una variante experimental etiquetada:
+
+```powershell
+python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --tag seed21
 ```
 
 Pipeline completo:
@@ -135,12 +147,19 @@ Metricas actuales:
   media: `2.0750 m`
   mediana: `1.8430 m`
 
+Mejor corrida exploratoria para `with_empty_values`:
+
+- `with_empty_values_seed21`
+  media: `2.3169 m`
+  mediana: `1.9804 m`
+
 ## Comparacion rapida con el paper
 
 - Paper `with_empty_values`: media `2.0368`, mediana `1.8199`
 - Reproduccion actual `with_empty_values`: media `2.3690`, mediana `2.1413`
+- Mejor corrida exploratoria `with_empty_values_seed21`: media `2.3169`, mediana `1.9804`
 - Paper `without_empty_values`: media `2.0559`, mediana `1.7745`
 - Reproduccion actual `without_empty_values`: media `2.0750`, mediana `1.8430`
 
 La variante sin valores vacios quedo muy cercana a lo reportado por el paper.  
-La variante con valores vacios todavia muestra una brecha mayor, lo que sugiere que ahi puede haber diferencias en el preprocesamiento, en la construccion exacta de fingerprints o en la forma en que el paper manejo los valores faltantes.
+La variante con valores vacios todavia muestra una brecha mayor, aunque una exploracion controlada de semillas mejoro el resultado base. Esto sugiere que ahi puede haber diferencias en el preprocesamiento, en la construccion exacta de fingerprints, en la inicializacion del entrenamiento o en la forma en que el paper manejo los valores faltantes.

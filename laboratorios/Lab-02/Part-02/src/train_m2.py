@@ -92,6 +92,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--batch-size", type=int, default=256)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--tag", default="", help="Optional suffix for output folder name.")
     args = parser.parse_args()
 
     ensure_supported_python()
@@ -108,7 +109,8 @@ def main() -> None:
     np.random.seed(args.seed)
 
     csv_path = FINGERPRINT_DIR / args.fingerprint_name / f"{args.variant}.csv"
-    model_dir = MODELS_DIR / "M2" / args.variant
+    model_variant_dir = args.variant if not args.tag else f"{args.variant}_{args.tag}"
+    model_dir = MODELS_DIR / "M2" / model_variant_dir
     model_dir.mkdir(parents=True, exist_ok=True)
 
     sensor_columns, x_values, y_values = load_training_rows(csv_path)
@@ -145,6 +147,8 @@ def main() -> None:
             {
                 "fingerprint_name": args.fingerprint_name,
                 "variant": args.variant,
+                "output_variant": model_variant_dir,
+                "seed": args.seed,
                 "epochs_ran": len(history.history.get("loss", [])),
                 "final_loss": history.history.get("loss", [None])[-1],
                 "final_val_loss": history.history.get("val_loss", [None])[-1],

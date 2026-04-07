@@ -74,6 +74,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate M2 on online processed fingerprints.")
     parser.add_argument("--fingerprint-name", default="lab02_ble_ferrero")
     parser.add_argument("--variant", choices=["with_empty_values", "without_empty_values"], default="with_empty_values")
+    parser.add_argument("--tag", default="", help="Optional suffix for output folder name.")
     args = parser.parse_args()
 
     if sys.version_info[:2] not in {(3, 10), (3, 11)}:
@@ -86,10 +87,12 @@ def main() -> None:
         fail(f"Evaluation dependencies are missing: {exc}")
 
     dataset_path = ONLINE_DIR / args.fingerprint_name / f"{args.variant}.csv"
-    model_dir = MODELS_DIR / "M2" / args.variant
+    model_variant_dir = args.variant if not args.tag else f"{args.variant}_{args.tag}"
+    model_dir = MODELS_DIR / "M2" / model_variant_dir
     model_path = model_dir / "model.keras"
     scaler_path = model_dir / "scaler.pkl"
-    output_path = METRICS_DIR / f"m2_{args.variant}_evaluation.json"
+    metrics_name = f"m2_{model_variant_dir}_evaluation.json"
+    output_path = METRICS_DIR / metrics_name
 
     if not dataset_path.exists():
         fail(f"Online dataset not found: {dataset_path}")
@@ -122,6 +125,7 @@ def main() -> None:
             {
                 "fingerprint_name": args.fingerprint_name,
                 "variant": args.variant,
+                "output_variant": model_variant_dir,
                 "distance_stats": stats,
             },
             indent=2,

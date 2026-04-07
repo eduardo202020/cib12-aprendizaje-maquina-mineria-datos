@@ -249,16 +249,19 @@ La comparacion no debe quedarse en “el modelo funciono”, sino que debe contr
 #### with_empty_values
 
 - Paper M2: mean `2.0368`, median `1.8199`
-- Mi reproduccion M2: mean `___`, median `___`
-- Diferencia absoluta: `___`
-- Diferencia porcentual: `___`
+- Mi reproduccion M2: mean `2.3690`, median `2.1413`
+- Diferencia absoluta: mean `0.3322`, median `0.3214`
+- Diferencia porcentual: mean `16.31%`, median `17.66%`
+- Mejor corrida exploratoria: mean `2.3169`, median `1.9804`
+- Mejor diferencia absoluta: mean `0.2801`, median `0.1605`
+- Mejor diferencia porcentual: mean `13.75%`, median `8.82%`
 
 #### without_empty_values
 
 - Paper M2: mean `2.0559`, median `1.7745`
-- Mi reproduccion M2: mean `___`, median `___`
-- Diferencia absoluta: `___`
-- Diferencia porcentual: `___`
+- Mi reproduccion M2: mean `2.0750`, median `1.8430`
+- Diferencia absoluta: mean `0.0191`, median `0.0685`
+- Diferencia porcentual: mean `0.93%`, median `3.86%`
 
 ### 3.5 Reflexion critica esperada
 
@@ -360,6 +363,14 @@ Comparacion con el paper:
 - paper: media `2.0368 m`, mediana `1.8199 m`
 - reproduccion: media `2.3690 m`, mediana `2.1413 m`
 
+Mejor corrida exploratoria:
+
+- etiqueta: `with_empty_values_seed21`
+- media: `2.3169 m`
+- mediana: `1.9804 m`
+- minimo: `0.1214 m`
+- maximo: `16.1974 m`
+
 ### Variante without_empty_values
 
 - media: `2.0750 m`
@@ -376,11 +387,12 @@ Comparacion con el paper:
 
 La reproduccion de `without_empty_values` quedo muy cercana a los valores del paper, lo que respalda que el pipeline general es consistente.
 
-La reproduccion de `with_empty_values` quedo algo por encima de lo reportado, lo cual sugiere diferencias posibles en:
+La reproduccion base de `with_empty_values` quedo algo por encima de lo reportado. Sin embargo, una exploracion controlada de semillas mejoro ese escenario hasta `2.3169 m` de media y `1.9804 m` de mediana, lo que muestra sensibilidad del entrenamiento a la inicializacion. Aun asi, la brecha con el paper sigue siendo visible, lo cual sugiere diferencias posibles en:
 
 - el preprocesamiento exacto,
 - la construccion de ventanas,
 - la seleccion final de fingerprints,
+- la inicializacion aleatoria del modelo,
 - o detalles no completamente especificados por los autores.
 
 ---
