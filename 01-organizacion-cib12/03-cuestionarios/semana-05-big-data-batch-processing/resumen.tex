@@ -1,0 +1,414 @@
+% :contentReference[oaicite:0]{index=0}
+\documentclass[8pt,a4paper,twocolumn]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=0.75cm,right=0.75cm,top=0.55cm,bottom=0.7cm,columnsep=0.45cm]{geometry}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.12em}
+\setlength{\columnseprule}{0pt}
+\pagestyle{plain}
+\setlist[itemize]{leftmargin=1.0cm,itemsep=0.1em,topsep=0.15em}
+\setlist[enumerate]{leftmargin=1.0cm,itemsep=0.1em,topsep=0.15em}
+\setlist[description]{leftmargin=0cm,style=nextline,itemsep=0.1em,topsep=0.15em}
+\titlespacing*{\section}{0pt}{0.35em}{0.2em}
+\titlespacing*{\subsection}{0pt}{0.3em}{0.15em}
+
+\newcommand{\resumentitulo}{Resumen de estudio - Semana 4}
+
+\begin{document}
+
+\vspace*{-1.0em}
+\begin{tcolorbox}[colback=black!12,colframe=black!35,boxrule=0.3pt,arc=1pt,left=4pt,right=4pt,top=3pt,bottom=3pt]
+{\bfseries\normalsize \resumentitulo\par}
+{\scriptsize CIB12 - Aprendizaje de Maquina y Mineria de Datos\par}
+\end{tcolorbox}
+\vspace{0.15em}
+
+\section{1. Tema}
+\textbf{Big Data Offline Batch Processing (Cap.\ 2: Marco técnico de procesamiento offline).} En esta semana se estudia el \textit{framework técnico} que soporta el procesamiento por lotes offline, centrado en: \textbf{HDFS} (almacenamiento), \textbf{Hive} (data warehouse), \textbf{Spark/SparkSQL} (análisis batch) y \textbf{herramientas de recolección/carga} (Sqoop y Loader).
+
+\begin{tcolorbox}[colback=black!7,colframe=black!35,boxrule=0.3pt,arc=1pt,left=4pt,right=4pt,top=3pt,bottom=3pt,title=\textbf{Idea central}]
+El procesamiento offline por lotes se apoya en un \textbf{ecosistema modular}: \textbf{almacenar} grandes volúmenes (HDFS), \textbf{organizar} y \textbf{consultar} como almacén analítico (Hive), \textbf{procesar} eficientemente en batch (Spark/SparkSQL) y \textbf{mover/cargar} datos desde/hacia sistemas externos (Sqoop/Loader).
+\end{tcolorbox}
+
+\section{2. Resumen de la semana}
+\begin{itemize}
+\item \textbf{HDFS}: sistema distribuido inspirado en GFS, con \textbf{tolerancia a fallos}, \textbf{alto throughput} y \textbf{soporte para archivos grandes} (TB/PB); no es ideal para muchos archivos pequeños, escritura aleatoria o lecturas de baja latencia.
+\item \textbf{Hive}: herramienta de \textbf{data warehouse} sobre Hadoop para consulta/gestión distribuida (PB); soporta ETL, múltiples motores (MapReduce/Tez/Spark), acceso a HDFS y HBase; organiza datos con tablas internas/externas, particiones y buckets.
+\item \textbf{Spark/SparkSQL}: motor batch \textbf{en memoria} (mayor eficiencia que MapReduce), con conceptos clave (RDD, shuffle, dependencias, stages, transformations/actions) y un módulo SQL (SparkSQL) orientado a \textbf{datos estructurados} en escenarios \textbf{no en tiempo real}.
+\item \textbf{Sqoop/Loader}: herramientas para \textbf{transferir/cargar} datos entre Hadoop (HDFS/Hive/HBase) y bases relacionales u otros sistemas; Sqoop explica import/export con paralelismo vía \textit{maps}; Loader agrega interfaz gráfica, seguridad y alta disponibilidad.
+\end{itemize}
+
+\section{3. Conceptos clave}
+\begin{description}
+\item[HDFS] Sistema de archivos distribuido para \textbf{almacenamiento masivo} y acceso tipo \textbf{streaming}.
+\item[NameNode / DataNode] NameNode gestiona \textbf{metadatos}; DataNodes almacenan \textbf{bloques} y replican datos.
+\item[Hive] Data warehouse en Hadoop; abstrae datos con \textbf{tablas} y consultas tipo SQL (HQL).
+\item[Tabla interna vs externa] Define si al \texttt{DROP} se elimina \textbf{datos+metadatos} (interna) o \textbf{solo metadatos} (externa).
+\item[UDF/UDAF/UDTF] Funciones definidas por el usuario: fila$\rightarrow$fila, múltiples filas$\rightarrow$una fila, fila$\rightarrow$múltiples filas.
+\item[Data mart vs Data warehouse] Data mart: orientado a \textbf{departamentos} y cubos; Data warehouse: \textbf{capas/modelos} para múltiples análisis.
+\item[Spark] Motor distribuido \textbf{en memoria} para batch, analítica y minería de datos.
+\item[RDD] Estructura distribuida \textbf{inmutable} y \textbf{particionable}; base del procesamiento Spark.
+\item[Shuffle] Reorganización de datos que impacta rendimiento y divide el DAG en \textbf{stages}.
+\item[SparkSQL] Módulo SQL para datos estructurados; compila SQL a planes ejecutables sobre Spark.
+\item[Sqoop] Transferencia de datos entre Hadoop y BD relacionales (import/export) con paralelismo.
+\item[Loader] Herramienta de carga (basada/optimizada sobre Sqoop) con interfaz gráfica, seguridad y HA.
+\end{description}
+
+\section{4. Desarrollo del tema}
+\subsection{4.1 HDFS (Data Storage)}
+\textbf{Diseño y propósito.} HDFS se basa en el enfoque de sistemas distribuidos tipo GFS, y prioriza:
+\begin{itemize}
+\item \textbf{Alta tolerancia a fallos}: se asume que el hardware puede fallar.
+\item \textbf{Alto throughput}: ideal para accesos masivos a datos.
+\item \textbf{Archivos grandes}: almacenamiento a escala TB/PB.
+\end{itemize}
+
+\textbf{Adecuado / No adecuado.}
+\begin{itemize}
+\item \textbf{Adecuado}: almacenamiento y acceso de \textbf{archivos grandes}; acceso \textbf{streaming}.
+\item \textbf{No adecuado}: \textbf{muchos archivos pequeños}; \textbf{escritura aleatoria}; \textbf{lectura de baja latencia}.
+\end{itemize}
+
+\textbf{Arquitectura básica (idea del diagrama).} Cliente$\leftrightarrow$NameNode para operaciones de \textbf{metadatos}; Cliente$\leftrightarrow$DataNodes para \textbf{operaciones de bloques}; \textbf{replicación} de bloques y organización por \textbf{racks}.
+
+\textbf{Comandos frecuentes (\texttt{hdfs dfs}).}
+\begin{itemize}
+\item \texttt{-cat}: muestra contenido de archivo.
+\item \texttt{-ls}: lista directorios/archivos.
+\item \texttt{-rm}: elimina archivo (pasa por papelera si está activa).
+\item \texttt{-put} / \texttt{-get}: subir/bajar datos hacia/desde HDFS.
+\item \texttt{-mkdir}: crea directorio.
+\item \texttt{-chmod} / \texttt{-chown}: permisos/propietario.
+\end{itemize}
+Administración: \texttt{hdfs dfsadmin -safemode} (modo seguro), \texttt{-report} (estado).
+
+\textbf{Papelera (Trash).} Al borrar, HDFS puede mover archivos a papelera. Se configura por tiempo (minutos) con \texttt{fs.trash.interval} en \texttt{core-site.xml} (ej.\ 1440 min).
+
+\subsection{4.2 Hive (Data Warehouse)}
+\textbf{Definición.} Hive es una herramienta de data warehouse sobre Hadoop que soporta \textbf{consulta y gestión distribuida} a escala PB.
+
+\textbf{Características principales.}
+\begin{itemize}
+\item ETL \textbf{flexible y conveniente}.
+\item Soporta motores: \textbf{MapReduce}, \textbf{Tez}, \textbf{Spark}.
+\item Acceso directo a \textbf{HDFS} y \textbf{HBase}.
+\item Fácil de usar y programar (enfoque SQL/HQL).
+\end{itemize}
+
+\textbf{Arquitectura (según diagrama).} Interfaces (CLI/Web/JDBC/ODBC) $\rightarrow$ \textbf{Driver} (Compiler/Optimizer/Executor) $\rightarrow$ \textbf{MetaStore} (metadatos) y ejecución en el ecosistema Hadoop.
+
+\textbf{Modelo de almacenamiento.} \textbf{Database} $\rightarrow$ \textbf{tablas} (internas/externas) $\rightarrow$ \textbf{particiones} $\rightarrow$ \textbf{buckets}. Se considera además \textbf{skewed data} (datos sesgados) vs \textbf{normal data}.
+
+\subsubsection*{Tablas internas vs externas (comparación)}
+\begin{center}
+\begin{tabular}{@{}p{0.22\linewidth}p{0.35\linewidth}p{0.35\linewidth}@{}}
+\toprule
+\textbf{Acción} & \textbf{Interna} & \textbf{Externa}\\
+\midrule
+\texttt{CREATE/LOAD} & Mueve datos al directorio del repositorio & No mueve la ubicación física \\
+\texttt{DROP} & Borra metadatos y datos & Borra solo metadatos \\
+Conversión & \multicolumn{2}{p{0.70\linewidth}@{}}{\texttt{alter table tableName set tblproperties('EXTERNAL'='TRUE/FALSE');}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Funciones en Hive.}
+\begin{itemize}
+\item Ver funciones: \texttt{show functions;}
+\item Ver ayuda: \texttt{desc function upper;} / \texttt{desc function extended upper;}
+\item Tipos comunes: matemáticas (\texttt{round, abs, rand}), fechas (\texttt{to\_date, current\_date}), cadenas (\texttt{trim, length, substr}).
+\end{itemize}
+
+\textbf{UDF en Hive (tipos).}
+\begin{itemize}
+\item \textbf{UDF}: recibe \textbf{1 fila} y devuelve \textbf{1 fila}.
+\item \textbf{UDAF}: recibe \textbf{múltiples filas} y devuelve \textbf{1 fila}.
+\item \textbf{UDTF}: recibe \textbf{1 fila} y devuelve \textbf{múltiples filas}.
+\end{itemize}
+
+\textbf{Procedimiento de desarrollo UDF (resumen).}
+\begin{enumerate}
+\item Heredar de \texttt{org.apache.hadoop.hive.ql.exec.UDF}.
+\item Implementar \texttt{evaluate()} con la lógica.
+\item Comprimir y subir a HDFS.
+\item Crear función temporal en Hive.
+\item Invocar la función en consultas.
+\end{enumerate}
+
+\textbf{Optimización en Hive (ideas clave).}
+\begin{itemize}
+\item \textbf{Data skew}: exceso de datos concentrados en pocos servidores; ralentiza todo el cómputo. Causas típicas: \texttt{group by}, \texttt{distinct count}, \texttt{join}.
+\item Agregación en \texttt{map} y balanceo: \texttt{set hive.map.aggr=true;} y \texttt{set hive.groupby.skewindata=true;}
+\item \textbf{Map-side join}: tabla pequeña en memoria al unir con tabla grande: \texttt{set hive.auto.convert.join=true;}
+\item \textbf{Ejecución paralela}: fases del plan en paralelo:
+\texttt{set hive.exec.parallel=true;} y \texttt{set hive.exec.parallel.thread.number=8;}
+\end{itemize}
+
+\subsubsection*{Data mart vs Data warehouse (diferencia conceptual)}
+\begin{itemize}
+\item \textbf{Data mart}: orientado a \textbf{departamentos/usuarios específicos}; almacena por dimensiones/métricas/jerarquías para generar \textbf{cubos} y apoyar decisiones.
+\item \textbf{Data warehouse}: organiza datos por \textbf{capas} y \textbf{modelos} (modular) para cubrir múltiples requerimientos analíticos.
+\end{itemize}
+
+\textbf{Capas típicas en warehouse con Hive.}
+\begin{itemize}
+\item \textbf{ODS}: capa de datos crudos.
+\item \textbf{DWD}: misma estructura/granularidad que el origen; facilita limpieza.
+\item \textbf{DWS}: agregación ligera a partir de DWD.
+\item \textbf{ADS}: datos para reportes/estadísticas.
+\end{itemize}
+
+\textbf{Ventajas de la estratificación (layering).}
+\begin{itemize}
+\item Simplifica problemas complejos dividiendo en pasos.
+\item Reduce R\&D repetido: estandariza y reutiliza resultados intermedios.
+\item Aísla datos crudos de datos estadísticos: reduce excepciones/sensibilidad.
+\end{itemize}
+
+\subsection{4.3 Spark y SparkSQL (Offline Analysis)}
+\textbf{Spark (visión general).} Motor batch distribuido \textbf{basado en memoria}; divide tareas y las ejecuta en múltiples CPUs. Al guardar intermedios en memoria reduce I/O a disco y aumenta velocidad; es útil en procesamiento y minería de datos.
+
+\textbf{Escenarios de aplicación de Spark.}
+\begin{itemize}
+\item Procesamiento de datos (rápido, tolerante a fallos, escalable).
+\item Cómputo iterativo (lógicas complejas).
+\item Minería/análisis con algoritmos de ML y data mining.
+\item Procesamiento de streams con latencia a nivel de segundos.
+\item Análisis con SQL/DSL sobre datos estructurados.
+\end{itemize}
+
+\textbf{Spark vs MapReduce (comparación).}
+\begin{itemize}
+\item Mayor rendimiento (se reporta mejora grande al usar memoria).
+\item Intermedios en memoria $\Rightarrow$ eficiente en iteraciones y menor latencia en batch.
+\item Modelo más flexible y mayor eficiencia de desarrollo.
+\item Mayor tolerancia a fallos (lineage).
+\end{itemize}
+
+\textbf{RDD.} Estructura distribuida, \textbf{solo lectura} y \textbf{particionable}. Se crea desde HDFS/almacenamientos compatibles, desde un RDD padre, o desde colecciones. Se puede cachear con distintos niveles; por defecto en memoria y desborda a disco si falta memoria.
+
+\textbf{Shuffle, dependencias y stages.}
+\begin{itemize}
+\item \textbf{Shuffle} afecta la velocidad y separa el DAG en \textbf{stages}.
+\item \textbf{Narrow dependency}: una partición del padre alimenta a una partición del hijo (p.\ ej., \texttt{map}, \texttt{filter}, \texttt{union}).
+\item \textbf{Wide dependency}: una partición del padre puede alimentar varias del hijo (p.\ ej., \texttt{groupByKey}, \texttt{join} no co-particionado); suele implicar shuffle.
+\end{itemize}
+
+\textbf{Transformations vs Actions.}
+\begin{itemize}
+\item \textbf{Transformation}: operación \textbf{perezosa} que crea un nuevo RDD (no ejecuta aún).
+\item \textbf{Action}: operación que \textbf{dispara} el cálculo; devuelve resultado o escribe en almacenamiento.
+\end{itemize}
+
+\textbf{Objetos clave.}
+\begin{itemize}
+\item \textbf{SparkConf}: configuración (pares clave-valor). Prioridad: \textbf{código} $>$ \textbf{parámetros dinámicos} $>$ \textbf{archivo de config}.
+\item \textbf{SparkContext}: entrada y conexión al clúster; crea RDDs y registra info de ejecución.
+\item \textbf{SparkSession}: (Spark 2.0) entrada unificada; encapsula SparkConf/SparkContext y APIs.
+\end{itemize}
+
+\textbf{SparkSQL (definición).} Módulo para procesar \textbf{datos estructurados} con SQL. Convierte SQL en planes de ejecución (sobre RDD) y los ejecuta en SparkCore.
+
+\textbf{Uso y limitación importante.}
+\begin{itemize}
+\item Usando \textbf{SparkSession}: tareas distribuidas como app Spark.
+\item Usando \textbf{JDBC}: el driver envía a \textbf{JDBCServer} del clúster; es \textbf{punto único} y puede ser cuello de botella (no ideal para mucho volumen y alta concurrencia).
+\end{itemize}
+
+\textbf{DataSet (concepto en SparkSQL).}
+\begin{itemize}
+\item Conjunto \textbf{fuertemente tipado} de objetos; transformable en paralelo (funcional/relacional).
+\item Representado por \textbf{Catalyst logical plan}; datos en binario para operar (sort/filter/shuffle) sin deserializar.
+\item \textbf{Lazy}: calcula solo cuando se ejecuta un \textit{action}; optimiza planes lógicos y genera plan físico eficiente/distribuido.
+\end{itemize}
+
+\textbf{Escenario de aplicación de SparkSQL.}
+\begin{itemize}
+\item \textbf{Aplicable}: datos estructurados; escenarios \textbf{sin requerimiento de tiempo real}; datos a escala PB.
+\item \textbf{No aplicable}: \textbf{consulta en tiempo real}.
+\end{itemize}
+
+\textbf{Ejemplos de consulta simple (DataFrame).}
+\begin{itemize}
+\item \texttt{df.select("id","name").show()}
+\item \texttt{df.select(\$"id",\$"name").where(\$"name" === "bbb").show()}
+\item \texttt{df.select(\$"id",\$"name").orderBy(\$"name".desc).show}
+\item \texttt{df.select(\$"id",\$"name").sort(\$"name".desc).show}
+\end{itemize}
+
+\subsection{4.4 Herramientas de recolección/carga: Sqoop y Loader}
+\textbf{Motivación.} La variedad de fuentes de datos hace desafiante la recolección y la carga; se presentan herramientas comunes: \textbf{Sqoop} y \textbf{Loader}.
+
+\textbf{Sqoop (definición e idea de uso).}
+\begin{itemize}
+\item Proyecto iniciado en 2009; de módulo tercero a proyecto Apache independiente.
+\item Transfiere datos entre Hadoop (HDFS/Hive) y BD tradicionales (MySQL, Oracle, PostgreSQL, etc.) mediante \textbf{import/export}.
+\end{itemize}
+
+\textbf{Principio de importación (Sqoop).}
+\begin{itemize}
+\item Se debe indicar \texttt{split-by}. Sqoop divide el rango de valores y asigna regiones a distintos \textbf{maps}.
+\item Cada \textbf{map} procesa filas de la BD y escribe a HDFS.
+\item El método de partición depende del tipo del campo; para \texttt{int}, se usan máximo/mínimo y \texttt{num-mappers} para determinar regiones.
+\end{itemize}
+
+\textbf{Principio de exportación (Sqoop).}
+\begin{itemize}
+\item Obtiene esquema/metainformación de la tabla destino y hace \textbf{matching} de campos.
+\item Importación paralela: archivos en Hadoop se dividen en \textbf{shards}; cada shard lo importa un \textbf{map task}.
+\end{itemize}
+
+\textbf{Loader (definición).} Herramienta de carga para intercambiar datos/archivos entre MRS y BD relacionales o entre sistemas de archivos; ofrece interfaz asistida (wizard), programación periódica y configuración de múltiples fuentes, limpieza/conversión y almacenamiento del clúster. Se apoya en Sqoop con optimizaciones y extensiones.
+
+\textbf{Escenarios (Loader).} Conecta Hadoop (HDFS/HBase/Hive) con \textbf{RDB}, \textbf{SFTP} y fuentes personalizadas.
+
+\textbf{Características (Loader).}
+\begin{itemize}
+\item \textbf{Gráfico}: interfaz de configuración y monitoreo.
+\item \textbf{Confiable}: servidores en activo/standby; jobs vía MapReduce; reintentos; sin datos residuales tras fallo.
+\item \textbf{Alto rendimiento}: MapReduce para procesamiento paralelo.
+\item \textbf{Seguro}: autenticación Kerberos y gestión de permisos de jobs.
+\end{itemize}
+
+\begin{tcolorbox}[colback=black!7,colframe=black!35,boxrule=0.3pt,arc=1pt,left=4pt,right=4pt,top=3pt,bottom=3pt,title=\textbf{Errores comunes o confusiones frecuentes}]
+\begin{itemize}
+\item \textbf{Confundir SparkSQL con ``tiempo real''}: SparkSQL está orientado a análisis batch/estructurado y se indica como \textbf{no aplicable} para consulta en tiempo real.
+\item \textbf{Elegir mal el tipo de tabla en Hive}: en tablas \textbf{internas}, \texttt{DROP} borra \textbf{datos+metadatos}; en \textbf{externas} se borra \textbf{solo metadatos}.
+\item \textbf{Ignorar data skew}: \texttt{group by}, \texttt{distinct} y \texttt{join} pueden concentrar carga y ralentizar todo el job si no se mitiga.
+\item \textbf{Pensar que HDFS sirve para todo}: no es ideal para \textbf{muchos archivos pequeños} ni para \textbf{lectura de baja latencia}.
+\end{itemize}
+\end{tcolorbox}
+
+\section{5. Procesos, arquitectura o flujo del tema}
+\subsection{5.1 Flujo de almacenamiento y procesamiento (visión integrada)}
+\begin{enumerate}
+\item \textbf{Ingreso/carga}: datos llegan desde BD relacionales o sistemas externos (Sqoop/Loader) hacia HDFS/Hive/HBase.
+\item \textbf{Almacenamiento base}: HDFS guarda datos masivos (bloques replicados); NameNode coordina metadatos.
+\item \textbf{Organización analítica}: Hive define esquemas/tablas/particiones/buckets y administra metadatos (MetaStore).
+\item \textbf{Cómputo batch}: Spark procesa con RDD (transformations $\rightarrow$ actions), minimizando I/O por uso de memoria; SparkSQL traduce SQL a planes ejecutables.
+\item \textbf{Optimización}: en Hive se ajustan parámetros (agregación en map, skew, joins, paralelismo) según patrón de carga.
+\end{enumerate}
+
+\subsection{5.2 Flujos clave explicados en texto}
+\begin{itemize}
+\item \textbf{Sqoop import}: \texttt{split-by} define partición del rango $\rightarrow$ múltiples \textbf{maps} leen porciones $\rightarrow$ escriben a HDFS en paralelo.
+\item \textbf{Sqoop export}: identifica esquema destino $\rightarrow$ divide archivos en shards $\rightarrow$ múltiples \textbf{maps} exportan en paralelo.
+\item \textbf{Spark ejecución}: transformations construyen DAG (lazy) $\rightarrow$ shuffle separa stages $\rightarrow$ actions disparan ejecución distribuida.
+\item \textbf{Hive consulta}: interfaz (CLI/JDBC) $\rightarrow$ Driver compila/optimiza $\rightarrow$ ejecuta en motor (MapReduce/Tez/Spark) con metadatos en MetaStore.
+\end{itemize}
+
+\section{6. Herramientas, algoritmos o componentes importantes}
+\subsection{6.1 Componentes (y su rol)}
+\begin{center}
+\begin{tabular}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+\toprule
+\textbf{Componente} & \textbf{Rol principal} \\
+\midrule
+HDFS & Almacenamiento distribuido masivo; bloques replicados; alto throughput. \\
+Hive & Data warehouse en Hadoop; ETL y consultas tipo SQL (HQL); MetaStore. \\
+Spark & Procesamiento batch en memoria; RDD; stages/shuffle; fault-tolerance por lineage. \\
+SparkSQL & Consultas SQL sobre Spark; planes optimizados (Catalyst) y ejecución distribuida. \\
+Sqoop & Import/export entre BD relacionales y Hadoop (HDFS/Hive/HBase). \\
+Loader & Carga con interfaz gráfica, HA, seguridad Kerberos y jobs MapReduce. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{6.2 Parámetros y comandos que suelen preguntar}
+\begin{itemize}
+\item Hive (skew y agregación): \texttt{hive.map.aggr}, \texttt{hive.groupby.skewindata}
+\item Hive (joins): \texttt{hive.auto.convert.join}
+\item Hive (paralelo): \texttt{hive.exec.parallel}, \texttt{hive.exec.parallel.thread.number}
+\item HDFS (papelera): \texttt{fs.trash.interval} en \texttt{core-site.xml}
+\end{itemize}
+
+\section{7. Aplicaciones o ejemplos}
+\subsection{7.1 Ejemplos típicos (sin código)}
+\begin{itemize}
+\item \textbf{Carga desde BD}: importar tablas desde MySQL/Oracle a HDFS para análisis batch (Sqoop).
+\item \textbf{Construcción de warehouse}: definir capas ODS/DWD/DWS/ADS en Hive para estandarizar limpieza, agregación y reporting.
+\item \textbf{Analítica estructurada}: ejecutar consultas con SparkSQL sobre datos estructurados (sin requerimiento de tiempo real).
+\item \textbf{Orquestación operativa}: usar Loader para trabajos periódicos con configuración asistida, reintentos y monitoreo.
+\end{itemize}
+
+\section{8. Resumen para memorizar}
+\begin{itemize}
+\item \textbf{HDFS} = almacenamiento masivo (TB/PB), throughput alto, tolerante a fallos; no para muchos archivos pequeños ni baja latencia.
+\item \textbf{Hive} = warehouse sobre Hadoop (PB), ETL + SQL/HQL; tablas internas vs externas; particiones/buckets; UDF/UDAF/UDTF.
+\item \textbf{Optimización Hive} = manejar \textbf{data skew}, map-side join y paralelismo.
+\item \textbf{Spark} = batch en memoria con RDD; shuffle divide stages; transformations (lazy) vs actions (ejecutan).
+\item \textbf{SparkSQL} = SQL para datos estructurados; útil en batch, no para tiempo real; JDBCServer puede ser cuello de botella.
+\item \textbf{Sqoop} = import/export paralelo con maps (\texttt{split-by} y \texttt{num-mappers}).
+\item \textbf{Loader} = carga ``enterprise'': interfaz gráfica, HA, Kerberos, jobs MapReduce con reintentos.
+\end{itemize}
+
+\section{9. Preguntas probables de cuestionario}
+\begin{enumerate}
+\item \textbf{¿Para qué está diseñado HDFS?}\\
+\textbf{R:} Para almacenamiento distribuido masivo (archivos grandes) con alta tolerancia a fallos y alto throughput.
+
+\item \textbf{Menciona 3 casos en los que HDFS no es adecuado.}\\
+\textbf{R:} Muchos archivos pequeños, escritura aleatoria, lectura de baja latencia.
+
+\item \textbf{¿Qué roles cumplen NameNode y DataNode?}\\
+\textbf{R:} NameNode gestiona metadatos; DataNode almacena bloques y replica datos.
+
+\item \textbf{¿Qué es Hive y qué escala soporta?}\\
+\textbf{R:} Un data warehouse sobre Hadoop para consulta/gestión distribuida a escala PB.
+
+\item \textbf{Diferencia clave entre tabla interna y externa en Hive al hacer \texttt{DROP}.}\\
+\textbf{R:} Interna: borra metadatos y datos; Externa: borra solo metadatos.
+
+\item \textbf{¿Qué significan UDF, UDAF y UDTF en Hive?}\\
+\textbf{R:} UDF: fila$\rightarrow$fila; UDAF: múltiples filas$\rightarrow$una fila; UDTF: fila$\rightarrow$múltiples filas.
+
+\item \textbf{¿Qué es data skew en Hive y qué operaciones lo suelen causar?}\\
+\textbf{R:} Concentración de datos en pocos nodos; típico en \texttt{group by}, \texttt{distinct} y \texttt{join}.
+
+\item \textbf{¿Para qué sirve \texttt{hive.auto.convert.join=true}?}\\
+\textbf{R:} Habilita \textit{map-side join} (tabla pequeña en memoria al unir con una grande).
+
+\item \textbf{¿Qué es un RDD en Spark?}\\
+\textbf{R:} Dataset distribuido resiliente, inmutable y particionable; base del procesamiento.
+
+\item \textbf{Diferencia entre \textit{transformation} y \textit{action} en Spark.}\\
+\textbf{R:} Transformation es lazy y crea RDD; Action dispara ejecución y devuelve/escribe resultados.
+
+\item \textbf{¿Qué limitación se menciona al usar SparkSQL vía JDBCServer?}\\
+\textbf{R:} Es un punto único y puede volverse cuello de botella con alto volumen y concurrencia.
+
+\item \textbf{Explica el principio de importación en Sqoop en una frase.}\\
+\textbf{R:} Divide el rango por \texttt{split-by} y paraleliza la lectura con múltiples \textbf{maps} que escriben a HDFS.
+
+\item \textbf{Menciona 2 características de Loader.}\\
+\textbf{R:} Interfaz gráfica de configuración/monitoreo; alta disponibilidad (active/standby) con reintentos; seguridad Kerberos (cualquiera 2).
+\end{enumerate}
+
+\section{10. Mini glosario}
+\begin{description}
+\item[Throughput] Capacidad de transferir/procesar grandes volúmenes de datos por unidad de tiempo.
+\item[Latencia] Tiempo de respuesta percibido en lectura/consulta; HDFS no prioriza baja latencia.
+\item[Metadatos] Información sobre datos (rutas, bloques, réplicas); central en NameNode y MetaStore.
+\item[Partición (Hive)] División lógica de una tabla por valores de una columna para mejorar gestión/consulta.
+\item[Bucket (Hive)] División física/lógica adicional que distribuye datos en archivos para optimizar joins/agrupaciones.
+\item[Skew (sesgo)] Desbalance de distribución de datos que genera cuellos de botella en cómputo.
+\item[DAG/Stage] Grafo de ejecución en Spark; un stage agrupa tareas hasta que un shuffle obliga a separar etapas.
+\item[Catalyst] Plan lógico/optimizador asociado a SparkSQL (se usa para representar/optimizar consultas).
+\item[Split-by (Sqoop)] Campo usado para particionar rangos y distribuir trabajo de importación entre maps.
+\item[Kerberos] Mecanismo de autenticación usado para seguridad en entornos Hadoop (mencionado en Loader).
+\end{description}
+
+\end{document}

@@ -1,0 +1,371 @@
+\documentclass[8pt,a4paper,twocolumn]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=0.75cm,right=0.75cm,top=0.55cm,bottom=0.7cm,columnsep=0.45cm]{geometry}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.12em}
+\setlength{\columnseprule}{0pt}
+\pagestyle{plain}
+\setlist[itemize]{leftmargin=1.0cm,itemsep=0.1em,topsep=0.15em}
+\setlist[enumerate]{leftmargin=1.0cm,itemsep=0.1em,topsep=0.15em}
+\setlist[description]{leftmargin=0cm,style=nextline,itemsep=0.1em,topsep=0.15em}
+\titlespacing*{\section}{0pt}{0.35em}{0.2em}
+\titlespacing*{\subsection}{0pt}{0.3em}{0.15em}
+
+\newcommand{\cajaitem}[2]{
+\noindent
+\fcolorbox{black}{gray!10}{
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{
+\textbf{#1}\\#2
+}}
+}
+
+\begin{document}
+
+\vspace*{-1.0em}
+\begin{tcolorbox}[colback=black!12,colframe=black!35,boxrule=0.3pt,arc=1pt,left=4pt,right=4pt,top=3pt,bottom=3pt]
+{\bfseries\normalsize Material de estudio semanal\par}
+{\scriptsize CIB12 - Aprendizaje de M\'aquina y Miner\'ia de Datos\par}
+{\scriptsize Semana 4: Desarrollo de Aplicaciones Big Data\par}
+{\scriptsize Fuente trabajada: Huawei (2022), Cap\'itulo 1\par}
+\end{tcolorbox}
+\vspace{0.15em}
+
+\section*{2. Resumen de la semana}
+
+Esta semana se estudia la parte del capítulo 1 enfocada en el \textbf{desarrollo de aplicaciones Big Data}. El contenido resalta que una buena aplicación no depende solo de programar, sino de combinar \textbf{base técnica} y \textbf{comprensión del servicio o negocio}. 
+
+El material presenta dos ejes principales:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Habilidades requeridas}: programación en Java y Scala, manejo de SQL y operaciones en Linux, junto con comprensión del proceso de desarrollo y del contexto del servicio.
+    \item \textbf{Proceso general de desarrollo}: desde la formulación del requerimiento hasta la visualización final de resultados.
+\end{itemize}
+
+La idea más importante es que el desarrollo de una aplicación Big Data sigue una \textbf{secuencia ordenada de etapas}: se identifican necesidades, se analizan requerimientos, se selecciona la tecnología, se valida su viabilidad, se preparan y procesan los datos, se almacenan los resultados y luego se muestran para uso operativo.
+
+\section*{3. Conceptos clave}
+
+\begin{table*}[t]
+\small
+\centering
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.28\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Concepto} & \textbf{Síntesis de estudio} \\
+\midrule
+Desarrollo de aplicaciones Big Data & Proceso de construir soluciones sobre datos masivos, integrando habilidades técnicas y entendimiento del negocio. \\
+Programación básica & Base técnica necesaria para desarrollar aplicaciones; incluye Java, Scala, SQL y manejo de Linux. \\
+Experiencia en desarrollo de servicios & Conocimiento del proceso de desarrollo y del contexto del servicio o problema que se desea resolver. \\
+Requirement submission & Etapa inicial donde se negocia entre áreas y se analiza la factibilidad del proyecto. \\
+Requirement analysis & Recolección y estudio de requerimientos mediante levantamiento de necesidades y estudio de mercado. \\
+Technology selection & Selección de solución técnica y elaboración del diagrama de flujo de datos. \\
+Feasibility analysis & Construcción de la plataforma técnica y pruebas para validar que la solución puede ejecutarse. \\
+Indicator analysis & Conversión de necesidades del negocio en indicadores medibles. \\
+Data interaction & Recolección, limpieza, almacenamiento de datos fuente y uso de middleware. \\
+Data analysis & Implementación del código para procesar o analizar datos. \\
+Result storage & Almacenamiento del resultado en base de datos u otra ubicación. \\
+Results display & Presentación del resultado para su uso por el área operativa. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section*{4. Desarrollo del tema}
+
+\cajaitem{Idea central}{Una aplicación Big Data de calidad surge cuando se unen dos dimensiones: capacidades técnicas de desarrollo y comprensión del servicio que se desea resolver. A partir de esa base, el trabajo se organiza en un proceso secuencial que transforma una necesidad en resultados utilizables.}
+
+\subsection*{4.1. ¿Qué hace posible una buena aplicación Big Data?}
+
+El material responde esta pregunta a partir de dos grupos de habilidades:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Fundamentos de programación}
+    \begin{itemize}[leftmargin=*]
+        \item Capacidad de programar con \textbf{Java} y \textbf{Scala}.
+        \item Familiaridad con \textbf{SQL}.
+        \item Manejo de \textbf{operaciones en Linux}.
+    \end{itemize}
+    
+    \item \textbf{Experiencia en desarrollo de servicios}
+    \begin{itemize}[leftmargin=*]
+        \item Comprensión de los \textbf{procesos de desarrollo}.
+        \item Comprensión del \textbf{contexto o trasfondo del servicio}.
+    \end{itemize}
+\end{enumerate}
+
+Esto implica que el desarrollador Big Data no solo debe saber escribir código, sino también comprender \textbf{qué problema se está resolviendo}, \textbf{cómo se integra la solución al proceso organizacional} y \textbf{cómo se traduce una necesidad del negocio en resultados útiles}.
+
+\subsection*{4.2. Relación entre conocimiento técnico y conocimiento del servicio}
+
+Según el esquema del material, ambos componentes son complementarios:
+
+\begin{itemize}[leftmargin=*]
+    \item El \textbf{conocimiento técnico} permite construir la solución.
+    \item El \textbf{conocimiento del servicio} permite orientar la solución hacia un objetivo real.
+\end{itemize}
+
+Si falta la primera parte, no se puede implementar la aplicación. Si falta la segunda, la aplicación puede funcionar técnicamente, pero no responder al problema correcto.
+
+\subsection*{4.3. Desarrollo como proceso y no como acto aislado}
+
+El documento no presenta el desarrollo como una sola fase de programación, sino como un \textbf{flujo completo}. La programación aparece en la etapa de \textit{data analysis}, pero antes de eso ya hubo trabajo de requerimientos, selección tecnológica y validación; y después de programar todavía faltan almacenamiento y presentación de resultados.
+
+Esto enseña una idea importante para evaluación: \textbf{desarrollar una aplicación Big Data es recorrer un ciclo completo}, no solamente escribir consultas o código.
+
+\cajaitem{Errores comunes o confusiones frecuentes}{
+\begin{itemize}[leftmargin=*]
+    \item Creer que desarrollar una aplicación Big Data es solamente programar.
+    \item Pensar que la selección tecnológica debe hacerse usando la tecnología más nueva sin evaluar estabilidad o viabilidad.
+    \item Omitir el análisis de requerimientos y pasar directamente a la implementación.
+    \item Confundir requerimientos del negocio con indicadores medibles.
+    \item Olvidar que los resultados deben almacenarse y mostrarse para su uso operativo.
+\end{itemize}
+}
+
+\subsection*{4.4. Qué enfatiza realmente esta sección}
+
+Esta parte del capítulo es \textbf{breve y orientada al proceso}. No entra en detalles extensos de algoritmos ni de implementación de código. Su foco está en:
+
+\begin{itemize}[leftmargin=*]
+    \item las competencias mínimas del desarrollador,
+    \item la secuencia general de desarrollo,
+    \item y los puntos que deben cuidarse antes, durante y después del análisis de datos.
+\end{itemize}
+
+Por ello, para un cuestionario, lo más probable es que se pregunten \textbf{etapas}, \textbf{relaciones entre habilidades} y \textbf{finalidad de cada fase}.
+
+\section*{5. Procesos, arquitectura o flujo del tema}
+
+En esta sección, el PDF enfatiza más un \textbf{flujo de desarrollo} que una arquitectura técnica detallada. El proceso general es el siguiente:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Requirement submission}  
+    Se inicia con negociación entre múltiples departamentos y un análisis preliminar de factibilidad del proyecto.
+    
+    \item \textbf{Requirement analysis}  
+    Se realiza levantamiento de requerimientos y estudio de mercado.
+    
+    \item \textbf{Technology selection}  
+    Se define el diagrama de flujo de datos y la solución técnica.
+    
+    \item \textbf{Feasibility analysis}  
+    Se construye la plataforma técnica y se hacen pruebas de factibilidad.
+    
+    \item \textbf{Indicator analysis}  
+    Se convierten los requerimientos en indicadores.
+    
+    \item \textbf{Data interaction}  
+    Incluye recolección de datos, limpieza, almacenamiento de datos fuente y middleware.
+    
+    \item \textbf{Data analysis}  
+    Se implementa el código para procesar y analizar los datos.
+    
+    \item \textbf{Result storage}  
+    Los resultados se guardan en una base de datos u otra ubicación.
+    
+    \item \textbf{Results display}  
+    Los resultados se presentan para uso del área de operaciones.
+\end{enumerate}
+
+\subsection*{5.1. Lectura del flujo como cadena lógica}
+
+\begin{center}
+\textbf{Necesidad} $\rightarrow$ \textbf{Análisis} $\rightarrow$ \textbf{Selección técnica} $\rightarrow$ \textbf{Validación} $\rightarrow$ \textbf{Preparación de datos} $\rightarrow$ \textbf{Implementación} $\rightarrow$ \textbf{Almacenamiento} $\rightarrow$ \textbf{Visualización}
+\end{center}
+
+\subsection*{5.2. Tabla resumen del proceso}
+
+\begin{table*}[t]
+\small
+\centering
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Etapa} & \textbf{Propósito} & \textbf{Elemento clave mencionado en el PDF} \\
+\midrule
+Requirement submission & Acordar el inicio del proyecto & Negociación interdepartamental y factibilidad \\
+Requirement analysis & Entender la necesidad & Encuesta de requerimientos y estudio de mercado \\
+Technology selection & Definir cómo se hará & Diagrama de flujo de datos y solución técnica \\
+Feasibility analysis & Verificar si es viable & Construcción de plataforma y pruebas \\
+Indicator analysis & Traducir la necesidad a métricas & Conversión entre requerimientos e indicadores \\
+Data interaction & Preparar el insumo de datos & Recolección, limpieza, almacenamiento fuente y middleware \\
+Data analysis & Ejecutar la lógica de análisis & Implementación de código \\
+Result storage & Conservar resultados & Base de datos u otra ubicación \\
+Results display & Entregar valor al usuario final & Uso por el área operativa \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section*{6. Herramientas, algoritmos o componentes importantes}
+
+Aunque esta sección no desarrolla algoritmos específicos, sí menciona componentes y habilidades importantes para el desarrollo de aplicaciones Big Data.
+
+\begin{table*}[t]
+\small
+\centering
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}p{0.24\textwidth} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Herramienta o componente} & \textbf{¿Qué es o qué representa?} & \textbf{¿Para qué sirve dentro del tema?} \\
+\midrule
+Java & Lenguaje de programación & Base para implementar aplicaciones Big Data \\
+Scala & Lenguaje de programación & Base técnica importante para desarrollar soluciones \\
+SQL & Lenguaje de consulta & Permite trabajar con datos de forma estructurada \\
+Linux & Entorno operativo & Soporta la operación técnica del desarrollo \\
+Diagrama de flujo de datos & Representación del movimiento de los datos & Ayuda en la selección tecnológica y diseño de la solución \\
+Plataforma técnica & Entorno construido para el proyecto & Permite probar factibilidad antes de producción \\
+Middleware & Capa intermedia del sistema & Participa en la interacción y manejo de datos \\
+Base de datos u otra ubicación & Destino del resultado & Permite persistir la salida del análisis \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection*{6.1. Lo que conviene recordar}
+
+\begin{itemize}[leftmargin=*]
+    \item En esta sección, \textbf{Java, Scala, SQL y Linux} aparecen como base de competencias.
+    \item El contenido \textbf{no se centra en algoritmos concretos}, sino en el proceso de desarrollo.
+    \item El \textbf{diagrama de flujo de datos} y la \textbf{plataforma técnica} son piezas clave de diseño y validación.
+\end{itemize}
+
+\section*{7. Aplicaciones o ejemplos}
+
+El material de esta parte no desarrolla un caso completo de implementación, pero sí permite reconstruir aplicaciones y usos probables del proceso.
+
+\subsection*{7.1. Ejemplo general de aplicación}
+
+Una organización detecta una necesidad y presenta un requerimiento. Luego:
+
+\begin{itemize}[leftmargin=*]
+    \item varias áreas negocian la viabilidad del proyecto,
+    \item se analiza la necesidad y el mercado,
+    \item se selecciona una tecnología adecuada,
+    \item se construye la plataforma y se prueba,
+    \item se recolectan y limpian los datos,
+    \item se implementa el análisis,
+    \item los resultados se guardan,
+    \item y finalmente se muestran al área operativa.
+\end{itemize}
+
+Este ejemplo refleja exactamente la lógica del flujo presentado en el documento.
+
+\subsection*{7.2. Relación con aplicaciones Big Data del capítulo}
+
+Dentro del mismo capítulo, Big Data aparece aplicado en dominios como:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Finanzas}: transacciones de alta frecuencia y análisis de riesgo crediticio.
+    \item \textbf{Logística}: logística inteligente, control de costos y gestión de riesgos.
+    \item \textbf{Salud}: predicción de epidemias y gestión sanitaria inteligente.
+    \item \textbf{Internet}: perfiles de usuario, recomendación personalizada y publicidad.
+    \item \textbf{Ciudad}: transporte inteligente y planificación urbana.
+\end{itemize}
+
+Estos ejemplos ayudan a entender que el proceso de desarrollo estudiado no se limita a un sector, sino que puede aplicarse en múltiples escenarios.
+
+\subsection*{7.3. Precisión importante}
+
+El PDF no detalla aquí un ejemplo de código ni una arquitectura de despliegue completa para esta sección específica. Por eso, el estudio debe concentrarse en \textbf{la lógica del desarrollo}, \textbf{las etapas} y \textbf{las competencias requeridas}.
+
+\section*{8. Resumen para memorizar}
+
+\begin{itemize}[leftmargin=*]
+    \item Una buena aplicación Big Data requiere \textbf{habilidades técnicas} y \textbf{comprensión del servicio}.
+    \item Las bases técnicas mencionadas son \textbf{Java, Scala, SQL y Linux}.
+    \item También se necesita entender \textbf{el proceso de desarrollo} y \textbf{el contexto del negocio}.
+    \item El desarrollo sigue una secuencia:
+    \begin{center}
+        \textbf{requerimiento $\rightarrow$ análisis $\rightarrow$ selección tecnológica $\rightarrow$ factibilidad $\rightarrow$ indicadores $\rightarrow$ interacción de datos $\rightarrow$ análisis $\rightarrow$ almacenamiento $\rightarrow$ visualización}
+    \end{center}
+    \item \textbf{Technology selection} incluye el \textbf{diagrama de flujo de datos} y la \textbf{solución técnica}.
+    \item \textbf{Feasibility analysis} consiste en construir la plataforma técnica y validar su funcionamiento.
+    \item \textbf{Data interaction} incluye \textbf{recolección, limpieza, almacenamiento fuente y middleware}.
+    \item \textbf{Data analysis} corresponde a la \textbf{implementación del código}.
+    \item \textbf{Result storage} guarda la salida en base de datos u otra ubicación.
+    \item \textbf{Results display} entrega el resultado al área operativa.
+    \item No siempre debe elegirse la tecnología más nueva; primero debe evaluarse su \textbf{viabilidad y estabilidad}.
+\end{itemize}
+
+\section*{9. Preguntas probables de cuestionario}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{¿Qué dos grupos de capacidades hacen posible una excelente aplicación Big Data?}\\
+    \textbf{Respuesta corta:} fundamentos de programación y experiencia en desarrollo de servicios.
+    
+    \item \textbf{¿Qué lenguajes de programación menciona el material como base?}\\
+    \textbf{Respuesta corta:} Java y Scala.
+    
+    \item \textbf{¿Qué lenguaje de consulta debe conocer el desarrollador?}\\
+    \textbf{Respuesta corta:} SQL.
+    
+    \item \textbf{¿Qué entorno operativo se menciona como conocimiento necesario?}\\
+    \textbf{Respuesta corta:} operaciones en Linux.
+    
+    \item \textbf{¿Qué incluye la etapa de \textit{requirement submission}?}\\
+    \textbf{Respuesta corta:} negociación entre múltiples departamentos y análisis de factibilidad del proyecto.
+    
+    \item \textbf{¿Qué actividades forman parte de \textit{requirement analysis}?}\\
+    \textbf{Respuesta corta:} levantamiento de requerimientos y estudio de mercado.
+    
+    \item \textbf{¿Qué se define en la etapa de \textit{technology selection}?}\\
+    \textbf{Respuesta corta:} el diagrama de flujo de datos y la solución técnica.
+    
+    \item \textbf{¿Para qué sirve \textit{feasibility analysis}?}\\
+    \textbf{Respuesta corta:} para construir la plataforma técnica y probar si la solución es viable.
+    
+    \item \textbf{¿Qué significa \textit{indicator analysis}?}\\
+    \textbf{Respuesta corta:} convertir los requerimientos en indicadores.
+    
+    \item \textbf{¿Qué tareas incluye \textit{data interaction}?}\\
+    \textbf{Respuesta corta:} recolección de datos, limpieza, almacenamiento de datos fuente y middleware.
+    
+    \item \textbf{¿Qué ocurre en \textit{data analysis}?}\\
+    \textbf{Respuesta corta:} se implementa el código para analizar o procesar los datos.
+    
+    \item \textbf{¿Dónde se guardan los resultados del análisis?}\\
+    \textbf{Respuesta corta:} en una base de datos u otra ubicación.
+    
+    \item \textbf{¿Quién usa la salida de la etapa \textit{results display}?}\\
+    \textbf{Respuesta corta:} el área de operaciones.
+    
+    \item \textbf{¿Es correcto elegir siempre la tecnología más nueva sin considerar estabilidad?}\\
+    \textbf{Respuesta corta:} no; la selección debe considerar viabilidad y estabilidad.
+    
+    \item \textbf{¿Puede usarse un host en la nube o una máquina física como servidor?}\\
+    \textbf{Respuesta corta:} sí, el material lo deja como posibilidad en la evaluación tipo cuestionario.
+\end{enumerate}
+
+\section*{10. Mini glosario}
+
+\begin{description}
+    \item[Big Data Application Development] Desarrollo de aplicaciones orientadas al manejo y aprovechamiento de grandes volúmenes de datos.
+    \item[Programming Basics] Conocimientos técnicos base requeridos para implementar la solución.
+    \item[Service Development Experience] Comprensión del proceso de desarrollo y del contexto del servicio.
+    \item[Requirement Submission] Presentación inicial del requerimiento con negociación y revisión preliminar de factibilidad.
+    \item[Requirement Analysis] Estudio detallado de necesidades y del entorno o mercado.
+    \item[Technology Selection] Elección de la solución técnica adecuada y definición del flujo de datos.
+    \item[Feasibility Analysis] Validación práctica de que la solución puede construirse y funcionar.
+    \item[Indicator Analysis] Traducción de necesidades del negocio a indicadores observables o medibles.
+    \item[Data Interaction] Manejo inicial de los datos: recolectar, limpiar, almacenar y conectar componentes intermedios.
+    \item[Data Analysis] Etapa en la que se implementa la lógica analítica mediante código.
+    \item[Result Storage] Persistencia de los resultados obtenidos.
+    \item[Results Display] Presentación final de los resultados para su uso operativo.
+    \item[Middleware] Componente intermedio que apoya la interacción y circulación de datos entre partes del sistema.
+\end{description}
+
+\end{document}
