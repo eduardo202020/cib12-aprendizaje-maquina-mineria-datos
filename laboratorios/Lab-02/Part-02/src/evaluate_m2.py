@@ -8,7 +8,7 @@ import pickle
 import sys
 from pathlib import Path
 
-from common import METRICS_DIR, MODELS_DIR, ONLINE_DIR, POS_LIMITS
+from common import ONLINE_DIR, POS_LIMITS, ensure_runtime_dirs, metrics_output_path, model_output_dir
 
 
 def fail(message: str) -> None:
@@ -86,13 +86,14 @@ def main() -> None:
     except Exception as exc:
         fail(f"Evaluation dependencies are missing: {exc}")
 
+    ensure_runtime_dirs()
     dataset_path = ONLINE_DIR / args.fingerprint_name / f"{args.variant}.csv"
     model_variant_dir = args.variant if not args.tag else f"{args.variant}_{args.tag}"
-    model_dir = MODELS_DIR / "M2" / model_variant_dir
+    model_dir = model_output_dir("M2", args.variant, args.tag)
     model_path = model_dir / "model.keras"
     scaler_path = model_dir / "scaler.pkl"
-    metrics_name = f"m2_{model_variant_dir}_evaluation.json"
-    output_path = METRICS_DIR / metrics_name
+    output_path = metrics_output_path("M2", args.variant, args.tag)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     if not dataset_path.exists():
         fail(f"Online dataset not found: {dataset_path}")

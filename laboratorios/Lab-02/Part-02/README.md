@@ -1,97 +1,112 @@
 # Part-02
 
-Esta carpeta esta destinada a la implementacion y reproduccion experimental del paper.
-
-## Estructura
-
-- `src`: scripts y modulos del proyecto
-- `notebooks`: notebooks de exploracion, pruebas o analisis
-- `datos`: dataset original o versiones procesadas
-- `resultados`: metricas, tablas, graficos y evidencias
+Esta carpeta contiene la reproduccion experimental del paper y ahora esta organizada para trabajarse en **4 semanas**, mostrando avances graduales en clase.
 
 ## Objetivo
 
-Aqui se desarrollara la Parte II del laboratorio:
+Reproducir de forma defendible el pipeline principal del paper:
 
-- preparacion del entorno
-- descarga o adaptacion del dataset
-- implementacion del pipeline
-- entrenamiento y evaluacion
-- comparacion con los resultados reportados en el paper
+- preparar el entorno,
+- generar fingerprints offline y online,
+- entrenar el modelo `M2`,
+- evaluar sobre trayectorias reales,
+- comparar los resultados con el paper,
+- y documentar el proceso con evidencia.
 
-## Entregables de la Parte II
+## Estructura principal
 
-- `informe/informe.tex`: informe tecnico en LaTeX
-- `informe/informe.pdf`: informe tecnico compilado en PDF
-- `evidencias/README.md`: resumen de evidencias de ejecucion
-- `evidencias/metricas-reproduccion.csv`: tabla de resultados
-- `evidencias/comandos-ejecutados.txt`: comandos principales del pipeline
+- `docs`: plan, cronograma, implementacion e informe
+- `src`: scripts del pipeline
+- `scripts`: utilidades PowerShell para entorno y ejecucion completa
+- `datos`: dataset crudo y versiones procesadas
+- `resultados`: modelos, metricas y salidas del experimento
+- `evidencias`: soporte de ejecucion organizado en `base`, `seed_sweep` y `semana-*`
+- `vendor`: repositorios originales usados para la reproduccion
 
-## Estado actual
+## Ruta de trabajo en 4 semanas
 
-Ya se ejecuto la fase de preparacion del pipeline:
+- `Semana 1`: entorno, dataset, verificacion metodologica y generacion de fingerprints
+- `Semana 2`: entrenamiento y evaluacion base de `M2` en `without_empty_values`
+- `Semana 3`: entrenamiento y evaluacion de `M2` en `with_empty_values` y exploracion de semillas
+- `Semana 4`: comparacion final con el paper, tablas, figuras y consolidacion del informe
 
-- se clono el repo de modelos en `vendor/models_fingerprint_positioning`
-- se clono la libreria de captura y filtrado en `vendor/rssi_capturing_filtering_library`
-- se descargo el dataset en `datos/raw/Position-Annotated-BLE-RSSI-Dataset`
-- se generaron los CSV procesados offline y online
-- se creo un entorno compatible en `.venv311`
-- se entreno `M2` para ambas variantes
-- se evaluo `M2` sobre trayectorias online
+La guia detallada esta en:
 
-## Scripts implementados
+- [docs/PLAN-4-SEMANAS.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/laboratorios/Lab-02/Part-02/docs/PLAN-4-SEMANAS.md)
+- [docs/cronograma/semana-01.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/laboratorios/Lab-02/Part-02/docs/cronograma/semana-01.md)
+- [docs/cronograma/semana-02.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/laboratorios/Lab-02/Part-02/docs/cronograma/semana-02.md)
+- [docs/cronograma/semana-03.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/laboratorios/Lab-02/Part-02/docs/cronograma/semana-03.md)
+- [docs/cronograma/semana-04.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/laboratorios/Lab-02/Part-02/docs/cronograma/semana-04.md)
 
-- `src/prepare_datasets.py`: genera fingerprints offline y online para las variantes `with_empty_values` y `without_empty_values`
-- `src/train_m2.py`: entrenamiento del modelo M2
-- `src/evaluate_m2.py`: evaluacion del modelo M2 sobre trayectorias online
-- `src/run_pipeline.py`: orquestador del pipeline completo
+## Scripts ya disponibles
+
+- `src/prepare_datasets.py`: genera fingerprints offline y online
+- `src/train_m2.py`: entrena el modelo `M2`
+- `src/evaluate_m2.py`: evalua `M2` sobre trayectorias online
+- `src/run_pipeline.py`: ejecuta el pipeline completo
 - `src/common.py`: rutas y utilidades compartidas
-- `scripts/bootstrap_env.ps1`: crea y prepara `.venv311`
+- `scripts/bootstrap_env.ps1`: prepara `.venv311`
 - `scripts/run_all.ps1`: ejecuta el pipeline completo con el entorno local
+
+## Estado tecnico actual
+
+Ya estan disponibles:
+
+- entorno local `.venv311`
+- dataset en `datos/raw/Position-Annotated-BLE-RSSI-Dataset`
+- CSV procesados offline y online
+- entrenamiento de `M2` para ambas variantes
+- evaluaciones base y exploratorias
+
+Documentacion principal:
+
+- `docs/implementacion.md`
+- `docs/PLAN-4-SEMANAS.md`
+- `docs/informe/informe.tex`
+- `docs/informe/informe.pdf`
 
 ## Resultados ya generados
 
-Se generaron estos archivos procesados:
+Artefactos principales:
 
 - `datos/processed/fingerprints/lab02_ble_ferrero/with_empty_values.csv`
 - `datos/processed/fingerprints/lab02_ble_ferrero/without_empty_values.csv`
 - `datos/processed/online/lab02_ble_ferrero/with_empty_values.csv`
 - `datos/processed/online/lab02_ble_ferrero/without_empty_values.csv`
-- `datos/processed/online/lab02_ble_ferrero/preparation_summary.json`
+- `resultados/experimentos/M2/base/with_empty_values`
+- `resultados/experimentos/M2/base/without_empty_values`
+- `resultados/comparativas/metricas/M2/base/with_empty_values_evaluation.json`
+- `resultados/comparativas/metricas/M2/base/without_empty_values_evaluation.json`
 
 Resumen actual:
 
-- `with_empty_values`: 213558 filas offline y 662 filas online
-- `without_empty_values`: 141713 filas offline y 486 filas online
+- `with_empty_values`: media `2.3690 m`, mediana `2.1413 m`
+- `with_empty_values_seed21`: media `2.3169 m`, mediana `1.9804 m`
+- `without_empty_values`: media `2.0750 m`, mediana `1.8430 m`
 
-## Entorno compatible
+## Carpetas de avance semanal
 
-Se preparo un entorno local compatible en:
+Para ir mostrando progreso de a poco se dejaron listas estas carpetas:
 
-- `.venv311`
+- `evidencias/base`
+- `evidencias/seed_sweep/with_empty_values`
+- `resultados/semana-01`
+- `resultados/semana-02`
+- `resultados/semana-03`
+- `resultados/semana-04`
+- `evidencias/semana-01`
+- `evidencias/semana-02`
+- `evidencias/semana-03`
+- `evidencias/semana-04`
 
-Versiones usadas:
+Cada semana deberia dejar al menos:
 
-- Python `3.11`
-- TensorFlow `2.15.1`
-- NumPy `1.26.4`
-- Pandas `2.2.3`
-- SciPy `1.11.4`
-- scikit-learn `1.4.2`
+- una nota corta de lo realizado,
+- los comandos ejecutados,
+- una tabla o metrica resumida,
+- y una evidencia que puedas mostrar en clase.
 
-Preparar el entorno desde cero:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File laboratorios\Lab-02\Part-02\scripts\bootstrap_env.ps1
-```
-
-Activarlo manualmente:
-
-```powershell
-laboratorios\Lab-02\Part-02\.venv311\Scripts\Activate.ps1
-```
-
-## Comandos de ejecucion
+## Comandos base
 
 Preparar datasets:
 
@@ -106,23 +121,11 @@ python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_
 python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
 ```
 
-Entrenar una variante experimental con semilla fija:
-
-```powershell
-python laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --seed 21 --tag seed21
-```
-
 Evaluar M2:
 
 ```powershell
 python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values
 python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
-```
-
-Evaluar una variante experimental etiquetada:
-
-```powershell
-python laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --tag seed21
 ```
 
 Pipeline completo:
@@ -131,43 +134,11 @@ Pipeline completo:
 python laboratorios\Lab-02\Part-02\src\run_pipeline.py --fingerprint-name lab02_ble_ferrero
 ```
 
-Pipeline completo con el entorno local:
+## Recomendacion de ejecucion
 
-```powershell
-powershell -ExecutionPolicy Bypass -File laboratorios\Lab-02\Part-02\scripts\run_all.ps1
-```
+No conviene volver a presentar el pipeline como una sola corrida grande. Para clase es mejor partirlo asi:
 
-## Resultados obtenidos
-
-Ya se entreno y evaluo `M2` en ambas variantes. Los artefactos quedaron en:
-
-- `resultados/models/M2/with_empty_values`
-- `resultados/models/M2/without_empty_values`
-- `resultados/metrics/m2_with_empty_values_evaluation.json`
-- `resultados/metrics/m2_without_empty_values_evaluation.json`
-
-Metricas actuales:
-
-- `with_empty_values`
-  media: `2.3690 m`
-  mediana: `2.1413 m`
-- `without_empty_values`
-  media: `2.0750 m`
-  mediana: `1.8430 m`
-
-Mejor corrida exploratoria para `with_empty_values`:
-
-- `with_empty_values_seed21`
-  media: `2.3169 m`
-  mediana: `1.9804 m`
-
-## Comparacion rapida con el paper
-
-- Paper `with_empty_values`: media `2.0368`, mediana `1.8199`
-- Reproduccion actual `with_empty_values`: media `2.3690`, mediana `2.1413`
-- Mejor corrida exploratoria `with_empty_values_seed21`: media `2.3169`, mediana `1.9804`
-- Paper `without_empty_values`: media `2.0559`, mediana `1.7745`
-- Reproduccion actual `without_empty_values`: media `2.0750`, mediana `1.8430`
-
-La variante sin valores vacios quedo muy cercana a lo reportado por el paper.  
-La variante con valores vacios todavia muestra una brecha mayor, aunque una exploracion controlada de semillas mejoro el resultado base. Esto sugiere que ahi puede haber diferencias en el preprocesamiento, en la construccion exacta de fingerprints, en la inicializacion del entrenamiento o en la forma en que el paper manejo los valores faltantes.
+1. preparar y explicar los datos,
+2. mostrar una primera reproduccion cercana al paper,
+3. mostrar el escenario mas dificil y el ajuste de semillas,
+4. cerrar con comparacion, discusion y conclusiones.

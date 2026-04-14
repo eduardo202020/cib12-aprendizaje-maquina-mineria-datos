@@ -6,7 +6,7 @@ import pickle
 import sys
 from pathlib import Path
 
-from common import FINGERPRINT_DIR, MODELS_DIR, POS_LIMITS
+from common import FINGERPRINT_DIR, POS_LIMITS, ensure_runtime_dirs, model_output_dir
 
 
 def fail(message: str) -> None:
@@ -108,9 +108,10 @@ def main() -> None:
     tf.random.set_seed(args.seed)
     np.random.seed(args.seed)
 
+    ensure_runtime_dirs()
     csv_path = FINGERPRINT_DIR / args.fingerprint_name / f"{args.variant}.csv"
     model_variant_dir = args.variant if not args.tag else f"{args.variant}_{args.tag}"
-    model_dir = MODELS_DIR / "M2" / model_variant_dir
+    model_dir = model_output_dir("M2", args.variant, args.tag)
     model_dir.mkdir(parents=True, exist_ok=True)
 
     sensor_columns, x_values, y_values = load_training_rows(csv_path)

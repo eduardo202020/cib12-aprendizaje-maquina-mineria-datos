@@ -14,8 +14,10 @@ PROCESSED_DIR = ROOT_DIR / "datos" / "processed"
 FINGERPRINT_DIR = PROCESSED_DIR / "fingerprints"
 ONLINE_DIR = PROCESSED_DIR / "online"
 RESULTS_DIR = ROOT_DIR / "resultados"
-MODELS_DIR = RESULTS_DIR / "models"
-METRICS_DIR = RESULTS_DIR / "metrics"
+EXPERIMENTS_DIR = RESULTS_DIR / "experimentos"
+COMPARISONS_DIR = RESULTS_DIR / "comparativas"
+MODELS_DIR = EXPERIMENTS_DIR
+METRICS_DIR = COMPARISONS_DIR / "metricas"
 LOGS_DIR = RESULTS_DIR / "logs"
 
 POS_LIMITS = {
@@ -36,11 +38,25 @@ def ensure_runtime_dirs() -> None:
     for path in (
         FINGERPRINT_DIR,
         ONLINE_DIR,
+        EXPERIMENTS_DIR,
+        COMPARISONS_DIR,
         MODELS_DIR,
         METRICS_DIR,
         LOGS_DIR,
     ):
         path.mkdir(parents=True, exist_ok=True)
+
+
+def model_output_dir(model_name: str, variant: str, tag: str = "") -> Path:
+    if tag:
+        return MODELS_DIR / model_name / "seed_sweep" / variant / tag
+    return MODELS_DIR / model_name / "base" / variant
+
+
+def metrics_output_path(model_name: str, variant: str, tag: str = "") -> Path:
+    if tag:
+        return METRICS_DIR / model_name / "seed_sweep" / variant / f"{tag}_evaluation.json"
+    return METRICS_DIR / model_name / "base" / f"{variant}_evaluation.json"
 
 
 def load_sensors_config(config_path: Path | None = None) -> List[SensorInfo]:
@@ -85,4 +101,3 @@ def write_csv(rows: Iterable[dict], output_path: Path, fieldnames: Sequence[str]
 def load_csv_rows(csv_path: Path) -> List[dict]:
     with csv_path.open("r", encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
-

@@ -1,0 +1,9 @@
+{
+  "fingerprint_name": "lab02_ble_ferrero",
+  "variant": "with_empty_values",
+  "output_variant": "with_empty_values_seed84",
+  "seed": 84,
+  "epochs_ran": 56,
+  "final_loss": 0.017836594954133034,
+  "final_val_loss": 0.030120206996798515
+}

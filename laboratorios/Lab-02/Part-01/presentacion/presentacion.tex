@@ -28,7 +28,7 @@
 
 \title{Parte I: Paper Individual}
 \subtitle{Bluetooth low energy indoor positioning:\\A fingerprinting neural network approach}
-\author{Curso CIB12 - Aprendizaje de M\'aquina y Miner\'ia de Datos}
+\author{Jhunior Guevara Lázaro\\ Curso CIB12 - Aprendizaje de M\'aquina y Miner\'ia de Datos}
 \institute{Laboratorio 02}
 \date{Abril 2026}
 
@@ -42,6 +42,7 @@
   \begin{itemize}
     \item \textbf{Autores}: Alberto Ferrero-L\'opez, Antonio Javier Gallego y Miguel Angel Lozano.
     \item \textbf{Revista}: \textit{Internet of Things}, volumen 31, 2025.
+    \item \textbf{Indexaci\'on}: revista indexada en \textbf{Scopus} y difundida en ScienceDirect.
     \item \textbf{DOI}: \href{https://doi.org/10.1016/j.iot.2025.101565}{10.1016/j.iot.2025.101565}.
     \item \textbf{Tema}: posicionamiento indoor con BLE, RSSI, fingerprinting y redes neuronales.
     \item \textbf{Motivo de elecci\'on}: combina IA aplicada a telecomunicaciones, comparaci\'on experimental y c\'odigo abierto reproducible.
@@ -69,6 +70,20 @@
   \begin{block}{Vac\'io identificado por los autores}
     Varios trabajos previos no detallan bien la captura, el filtrado o la evaluaci\'on real sobre trayectorias, y dependen demasiado de m\'etricas de entrenamiento.
   \end{block}
+\end{frame}
+
+\begin{frame}{Antecedentes clave}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}p{1.9cm}>{\RaggedRight\arraybackslash}p{1.1cm}>{\RaggedRight\arraybackslash}X}
+    \toprule
+    \textbf{Autor / trabajo} & \textbf{A\~no} & \textbf{Hallazgo relevante para este paper} \\
+    \midrule
+    Dani\c{s} et al. & 2017 / 2021 & Fingerprinting probabil\'istico con Wasserstein y filtro Monte Carlo adaptativo; reportan 3.064 m de error medio y sirven como estado del arte previo. \\
+    Faragher y Harle & 2015 & Analizan a fondo BLE y sus problemas de atenuaci\'on, ruido y multipath; inspiran la etapa de captura y filtrado propuesta. \\
+    Puckdeevongs & 2021 & Propone una red neuronal para RSSI indoor; aporta lineamientos de dise\~no, pero con menos detalle sobre captura y validaci\'on real. \\
+    Joseph et al. / Adege et al. & 2018 & Usan redes neuronales para localizaci\'on WiFi o indoor, pero eval\'uan poco el desempe\~no online y omiten detalles de preprocesamiento. \\
+    \bottomrule
+  \end{tabularx}
 \end{frame}
 
 \begin{frame}{Objetivo e hip\'otesis inferida}
@@ -154,6 +169,28 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{Esquema comparativo del aporte}
+  \small
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \begin{block}{Trabajos previos}
+        \begin{itemize}
+          \item Se enfocan en el modelo o en la m\'etrica de entrenamiento.
+          \item Reportan menos detalle sobre captura, filtrado y datos faltantes.
+          \item La evaluaci\'on real sobre trayectorias suele ser limitada.
+        \end{itemize}
+      \end{block}
+    \column{0.48\textwidth}
+      \begin{block}{Aporte del paper}
+        \begin{itemize}
+          \item Integra captura BLE, filtrado y fingerprinting en un solo pipeline.
+          \item Compara 8 modelos y trilateraci\'on bajo dos escenarios.
+          \item Eval\'ua con distancia euclidiana sobre trayectorias online.
+        \end{itemize}
+      \end{block}
+  \end{columns}
+\end{frame}
+
 \begin{frame}{Discusi\'on}
   \begin{itemize}
     \item M2 mejora a M1 sin aumentar demasiado el costo computacional, por lo que es una opci\'on s\'olida para aplicaciones en tiempo real.
@@ -165,6 +202,18 @@
   \begin{block}{Idea central}
     El aporte del paper no es solo una red neuronal, sino una metodolog\'ia integral: captura, filtrado, representaci\'on del fingerprint y evaluaci\'on real.
   \end{block}
+\end{frame}
+
+\begin{frame}{An\'alisis cr\'itico}
+  \small
+  \begin{itemize}
+    \item \textbf{Fortaleza metodol\'ogica}: el paper no se limita al modelo; controla captura, filtrado, preprocesamiento y evaluaci\'on online.
+    \item \textbf{Fortaleza de reproducibilidad}: publica DOI, dataset y repositorios de modelos y librer\'ias, lo que facilita la Parte II del laboratorio.
+    \item \textbf{Limitaci\'on experimental}: el estudio depende de un solo dataset y un entorno concreto; eso puede afectar la generalizaci\'on a otros edificios.
+    \item \textbf{Tensi\'on documental}: la ficha editorial indica ``No data was used'', pero el art\'iculo s\'i describe y cita un dataset p\'ublico; conviene mencionarlo como observaci\'on cr\'itica.
+    \item \textbf{Pregunta cr\'itica}: \textquestiondown la mejora proviene principalmente de la red neuronal o del proceso de filtrado y construcci\'on del fingerprint?
+    \item \textbf{Interpretaci\'on personal}: el mayor valor del paper est\'a en el pipeline completo y en la forma de evaluar, m\'as que en una arquitectura aislada.
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Conclusiones}

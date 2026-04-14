@@ -1,6 +1,12 @@
 # Evidencias de Ejecucion
 
-Esta carpeta resume la evidencia minima de la Parte II del laboratorio.
+Esta carpeta resume la evidencia minima de la Parte II del laboratorio y ahora esta organizada por tipo de uso.
+
+## Estructura
+
+- `base`: evidencia general de la reproduccion principal
+- `seed_sweep/with_empty_values`: espacio para evidencia de barrido de semillas
+- `semana-01` a `semana-04`: material de avance para exponer cada semana
 
 ## Entorno utilizado
 
@@ -28,8 +34,8 @@ Esta carpeta resume la evidencia minima de la Parte II del laboratorio.
 
 ## Evidencia incluida
 
-- `metricas-reproduccion.csv`: tabla compacta de metricas
-- `comandos-ejecutados.txt`: comandos principales del pipeline
+- `base/metricas-reproduccion.csv`: tabla compacta de metricas
+- `base/comandos-ejecutados.txt`: comandos principales del pipeline
 
 ## Nota
 
