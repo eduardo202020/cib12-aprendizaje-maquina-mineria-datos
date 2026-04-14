@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab-02 Part-02</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --panel: #fffdf8;
+      --ink: #1f2933;
+      --muted: #52606d;
+      --line: #d9d0c3;
+      --accent: #0f4c81;
+      --accent-2: #d9a441;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(217,164,65,0.18), transparent 30%),
+        linear-gradient(180deg, #f8f4ec 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(15,76,129,0.95), rgba(31,122,140,0.92));
+      color: white;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 18px 40px rgba(15,76,129,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -60px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255,255,255,0.28), transparent 65%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+    }
+    .hero p {
+      margin: 8px 0 0;
+      max-width: 760px;
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.92);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 10px 24px rgba(31,41,51,0.06);
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    .card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    .card li {
+      margin: 8px 0;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover { text-decoration: underline; }
+    .timeline {
+      margin-top: 26px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+    }
+    .timeline h2 {
+      margin: 0 0 12px;
+      color: var(--accent);
+    }
+    .weeks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+    .week {
+      border-left: 4px solid var(--accent-2);
+      background: #fffaf1;
+      padding: 14px 14px 14px 16px;
+      border-radius: 10px;
+    }
+    .week strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .metrics {
+      margin-top: 26px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 10px 24px rgba(31,41,51,0.06);
+    }
+    .metrics h2 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .metrics p {
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      background: #fffaf1;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .stat .label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .stat .value {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f0ece4;
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+    tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge.good {
+      background: #d8f3dc;
+      color: #1b5e20;
+    }
+    .badge.mid {
+      background: #fff3cd;
+      color: #8a5a00;
+    }
+    .badge.hard {
+      background: #f8d7da;
+      color: #842029;
+    }
+    .empty {
+      padding: 14px;
+      border-radius: 12px;
+      background: #fffaf1;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+    }
+    code {
+      background: #f0ece4;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Lab-02 Part-02</h1>
+      <p>
+        Panel de navegacion para la reproduccion experimental del paper.
+        Desde aqui puedes entrar al cronograma, los notebooks semanales, los resultados,
+        la evidencia resumida y el informe tecnico.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Plan y Cronograma</h2>
+        <p>Ruta de trabajo en 4 semanas, con tareas, entregables y foco por bloque.</p>
+        <ul>
+          <li><a href="./PLAN-4-SEMANAS.md">Plan general de 4 semanas</a></li>
+          <li><a href="./cronograma/semana-01.md">Semana 1</a></li>
+          <li><a href="./cronograma/semana-02.md">Semana 2</a></li>
+          <li><a href="./cronograma/semana-03.md">Semana 3</a></li>
+          <li><a href="./cronograma/semana-04.md">Semana 4</a></li>
+          <li><a href="./cronograma/plantilla-avance-semanal.md">Plantilla de avance</a></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Notebooks</h2>
+        <p>Notebooks listos para abrir y ejecutar semana por semana.</p>
+        <ul>
+          <li><a href="../notebooks/semana-01-datos.ipynb">Semana 1: datos</a></li>
+          <li><a href="../notebooks/semana-02-m2-sin-vacios.ipynb">Semana 2: M2 sin vacios</a></li>
+          <li><a href="../notebooks/semana-03-m2-con-vacios.ipynb">Semana 3: M2 con vacios</a></li>
+          <li><a href="../notebooks/semana-04-cierre.ipynb">Semana 4: cierre</a></li>
+          <li><a href="../notebooks/evidencias-parte-02.ipynb">Notebook maestro</a></li>
+          <li><a href="../notebooks/README.md">README de notebooks</a></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Resultados y Evidencias</h2>
+        <p>Accesos rapidos a modelos, metricas y evidencia resumida.</p>
+        <ul>
+          <li><a href="../resultados/README.md">README de resultados</a></li>
+          <li><a href="../resultados/experimentos/M2/base/without_empty_values/training_summary.json">Training summary sin vacios</a></li>
+          <li><a href="../resultados/comparativas/metricas/M2/base/without_empty_values_evaluation.json">Evaluacion sin vacios</a></li>
+          <li><a href="../resultados/comparativas/metricas/M2/base/with_empty_values_evaluation.json">Evaluacion con vacios</a></li>
+          <li><a href="../evidencias/base/metricas-reproduccion.csv">CSV de metricas</a></li>
+          <li><a href="../evidencias/base/comandos-ejecutados.txt">Comandos ejecutados</a></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Informe y Metodologia</h2>
+        <p>Documentacion tecnica, explicacion metodologica y version PDF del informe.</p>
+        <ul>
+          <li><a href="./implementacion.md">Implementacion</a></li>
+          <li><a href="./informe/informe.tex">Informe en LaTeX</a></li>
+          <li><a href="./informe/informe.pdf">Informe en PDF</a></li>
+          <li><a href="../README.md">README de Part-02</a></li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="timeline">
+      <h2>Ruta de Exposicion</h2>
+      <div class="weeks">
+        <div class="week">
+          <strong>Semana 1</strong>
+          Preparacion del dataset, fingerprints y verificacion metodologica.
+        </div>
+        <div class="week">
+          <strong>Semana 2</strong>
+          Reproduccion base de <code>M2</code> en <code>without_empty_values</code>.
+        </div>
+        <div class="week">
+          <strong>Semana 3</strong>
+          Escenario dificil con <code>with_empty_values</code> y barrido de semillas.
+        </div>
+        <div class="week">
+          <strong>Semana 4</strong>
+          Comparacion final con el paper, cierre del informe y conclusiones.
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics">
+      <h2>Resumen de Metricas</h2>
+      <p>
+        Esta seccion carga automaticamente los datos desde
+        <code>../evidencias/base/metricas-reproduccion.csv</code>.
+      </p>
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat">
+          <span class="label">Estado</span>
+          <span class="value">Cargando...</span>
+        </div>
+      </div>
+      <div id="metrics-table" class="empty">Cargando tabla de metricas...</div>
+    </section>
+
+    <p class="footer">
+      Si abres esta pagina en el navegador o desde tu editor, deberias poder navegar todo el laboratorio sin perderte entre carpetas.
+    </p>
+  </div>
+  <script>
+    function parseCsv(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines[0].split(",");
+      return lines.slice(1).map(line => {
+        const values = line.split(",");
+        const row = {};
+        headers.forEach((header, index) => row[header] = values[index]);
+        return row;
+      });
+    }
+
+    function badgeForScenario(name) {
+      if (name === "without_empty_values") return '<span class="badge good">Mas cercano al paper</span>';
+      if (name.includes("seed21")) return '<span class="badge mid">Mejor exploratoria</span>';
+      return '<span class="badge hard">Escenario dificil</span>';
+    }
+
+    function renderStats(rows) {
+      const statsGrid = document.getElementById("stats-grid");
+      const bestMean = rows.reduce((best, row) => Number(row.mean_m) < Number(best.mean_m) ? row : best, rows[0]);
+      const bestMedian = rows.reduce((best, row) => Number(row.median_m) < Number(best.median_m) ? row : best, rows[0]);
+      const stable = rows.find(row => row.escenario === "without_empty_values");
+      statsGrid.innerHTML = `
+        <div class="stat">
+          <span class="label">Mejor media</span>
+          <span class="value">${Number(bestMean.mean_m).toFixed(4)} m</span>
+        </div>
+        <div class="stat">
+          <span class="label">Mejor mediana</span>
+          <span class="value">${Number(bestMedian.median_m).toFixed(4)} m</span>
+        </div>
+        <div class="stat">
+          <span class="label">Escenario mas estable</span>
+          <span class="value">${stable ? "M2 sin vacios" : "N/D"}</span>
+        </div>
+        <div class="stat">
+          <span class="label">Corridas resumidas</span>
+          <span class="value">${rows.length}</span>
+        </div>
+      `;
+    }
+
+    function renderTable(rows) {
+      const host = document.getElementById("metrics-table");
+      const html = [
+        "<table>",
+        "<thead><tr><th>Escenario</th><th>Media (m)</th><th>Mediana (m)</th><th>Epocas</th><th>Muestras</th><th>Lectura</th></tr></thead>",
+        "<tbody>",
+        ...rows.map(row => `
+          <tr>
+            <td><strong>${row.escenario}</strong></td>
+            <td>${Number(row.mean_m).toFixed(4)}</td>
+            <td>${Number(row.median_m).toFixed(4)}</td>
+            <td>${row.epochs}</td>
+            <td>${row.samples}</td>
+            <td>${badgeForScenario(row.escenario)}<br><span style="color:#52606d">${row.comentario}</span></td>
+          </tr>
+        `),
+        "</tbody></table>"
+      ].join("");
+      host.className = "";
+      host.innerHTML = html;
+    }
+
+    fetch("../evidencias/base/metricas-reproduccion.csv")
+      .then(response => {
+        if (!response.ok) throw new Error("No se pudo leer el CSV de metricas");
+        return response.text();
+      })
+      .then(text => {
+        const rows = parseCsv(text);
+        renderStats(rows);
+        renderTable(rows);
+      })
+      .catch(error => {
+        document.getElementById("metrics-table").innerHTML = "No se pudo cargar el CSV automaticamente. " + error.message;
+        document.getElementById("stats-grid").innerHTML = `
+          <div class="stat">
+            <span class="label">Estado</span>
+            <span class="value" style="font-size:1rem">Carga manual necesaria</span>
+          </div>
+        `;
+      });
+  </script>
+</body>
+</html>

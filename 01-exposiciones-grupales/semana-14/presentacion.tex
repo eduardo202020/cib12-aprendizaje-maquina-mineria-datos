@@ -1,0 +1,338 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\definecolor{cibblue}{HTML}{0F4C81}
+\definecolor{cibteal}{HTML}{1F7A8C}
+\definecolor{cibgold}{HTML}{D9A441}
+
+\setbeamercolor{structure}{fg=cibblue}
+\setbeamercolor{frametitle}{fg=white,bg=cibblue}
+\setbeamercolor{title}{fg=white,bg=cibblue}
+\setbeamercolor{block title}{fg=white,bg=cibteal}
+\setbeamercolor{block body}{bg=black!3}
+
+\tikzset{
+  box/.style={draw=cibblue, rounded corners, fill=cibblue!8, minimum width=1.9cm, minimum height=0.9cm, align=center, font=\small},
+  smallbox/.style={draw=cibteal, rounded corners, fill=cibteal!8, minimum width=1.5cm, minimum height=0.8cm, align=center, font=\scriptsize},
+  line/.style={-{Latex[length=2mm]}, thick, draw=cibblue}
+}
+
+\title{Fundamentos de los algoritmos de aprendizaje profundo para modelos grandes}
+\subtitle{Exposicion grupal - Semana 14}
+\author{Curso CIB12 - Aprendizaje de Maquina y Mineria de Datos}
+\institute{Grupo 6}
+\date{Basado en \textit{huawei-2025.pdf}, capitulo 7}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Fuente y enfoque}
+  \begin{itemize}
+    \item \textbf{Documento base}: \textit{Algorithm Basics of Large-Scale Deep Learning}.
+    \item \textbf{Libro}: `huawei-2025.pdf`.
+    \item \textbf{Eje del capitulo}: explicar por que Transformer se volvio la base de los modelos grandes.
+    \item \textbf{Extension moderna}: optimizaciones recientes inspiradas en DeepSeek para escalar entrenamiento e inferencia.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{block}{Idea central}
+    Los modelos grandes combinan una arquitectura eficaz para representar secuencias con tecnicas de escalamiento que hacen viable entrenar e inferir a gran escala.
+  \end{block}
+\end{frame}
+
+\begin{frame}{De la atencion a los modelos grandes}
+  \begin{itemize}
+    \item El capitulo parte del \textbf{mecanismo de atencion}.
+    \item La atencion surge para enfocarse en las partes mas relevantes de la entrada.
+    \item Esto ayuda a resolver limitaciones de CNN y, sobre todo, de RNN en dependencias largas.
+    \item En secuencias extensas, no todo el contexto pesa igual; la atencion aprende a priorizar.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Mecanismo de atencion}
+  \begin{block}{Tres elementos}
+    Query (Q), Key (K) y Value (V).
+  \end{block}
+  \begin{enumerate}
+    \item Se calcula la similitud entre \textbf{Q} y \textbf{K}.
+    \item Esa similitud se normaliza para obtener pesos.
+    \item Los pesos se aplican sobre \textbf{V} para obtener una suma ponderada.
+  \end{enumerate}
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item El resultado es una representacion que destaca informacion relevante y reduce ruido.
+    \item Este principio es la base del \textbf{self-attention} en Transformer.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Esquema visual de atencion}
+  \centering
+  \begin{tikzpicture}[node distance=0.7cm]
+    \node[box] (q) {Query\\Q};
+    \node[box, right=1.0cm of q] (sim) {Similitud\\Q vs K};
+    \node[box, right=1.0cm of sim] (soft) {Softmax\\pesos};
+    \node[box, right=1.0cm of soft] (sum) {Suma\\ponderada};
+    \node[smallbox, above=0.9cm of sim] (k) {Key\\K};
+    \node[smallbox, below=0.9cm of sum] (v) {Value\\V};
+
+    \draw[line] (q) -- (sim);
+    \draw[line] (k) -- (sim);
+    \draw[line] (sim) -- (soft);
+    \draw[line] (soft) -- (sum);
+    \draw[line] (v) -- (sum);
+  \end{tikzpicture}
+  \vspace{0.25cm}
+
+  \begin{block}{Interpretacion}
+    Q pregunta, K permite comparar, y V aporta la informacion que finalmente se combina segun la importancia aprendida.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Por que Seq2Seq no era suficiente}
+  \begin{itemize}
+    \item El modelo Seq2Seq clasico usa encoder-decoder con RNN, LSTM o GRU.
+    \item Resume la entrada en un vector de contexto fijo.
+    \item En secuencias largas aparecen dos problemas:
+      \begin{itemize}
+        \item dependencia de largo plazo dificil de conservar
+        \item sobrecarga de informacion en un unico vector
+      \end{itemize}
+    \item La atencion permite mirar directamente partes especificas de la secuencia fuente durante la decodificacion.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Nacimiento de Transformer}
+  \begin{itemize}
+    \item En 2017, \textit{Attention Is All You Need} propone abandonar RNN y CNN para traduccion.
+    \item Transformer usa principalmente atencion para modelar dependencias.
+    \item Esto habilita mayor paralelismo que los modelos recurrentes.
+    \item Desde entonces se vuelve la base de BERT, GPT y muchos modelos grandes.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{block}{Impacto}
+    Transformer cambia la forma de modelar secuencias: ya no depende de procesarlas estrictamente paso a paso.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Arquitectura Transformer}
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \textbf{Encoder}
+      \begin{itemize}
+        \item self-attention
+        \item feed-forward network
+        \item add \& norm
+        \item N capas identicas
+      \end{itemize}
+    \column{0.52\textwidth}
+      \textbf{Decoder}
+      \begin{itemize}
+        \item masked self-attention
+        \item cross-attention al encoder
+        \item feed-forward network
+        \item capa final lineal + softmax
+      \end{itemize}
+  \end{columns}
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item En el capitulo se presenta la version clasica con \(N = 6\) capas.
+    \item Cada palabra se representa en un espacio de dimension 512.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Vista simplificada de Transformer}
+  \centering
+  \begin{tikzpicture}[node distance=0.55cm]
+    \node[smallbox, minimum width=2.2cm] (in) {Input\\Emb. + PE};
+    \node[smallbox, right=of in, minimum width=1.9cm] (sa) {Self-\\Attn};
+    \node[smallbox, right=of sa, minimum width=1.7cm] (ffn) {FFN};
+
+    \node[box, above=0.8cm of sa, minimum width=4.7cm] (enc) {Encoder};
+    \node[box, below=0.8cm of sa, minimum width=4.7cm] (dec) {Decoder};
+
+    \node[smallbox, right=1.1cm of ffn, minimum width=2.0cm] (mask) {Masked\\Attn};
+    \node[smallbox, right=of mask, minimum width=2.0cm] (cross) {Cross\\Attn + FFN};
+    \node[smallbox, right=of cross, minimum width=1.8cm] (out) {Linear\\Softmax};
+
+    \draw[line] (in) -- (sa);
+    \draw[line] (sa) -- (ffn);
+    \draw[line] (ffn) -- (mask);
+    \draw[line] (mask) -- (cross);
+    \draw[line] (cross) -- (out);
+    \draw[line] (sa.north) -- (enc.south);
+    \draw[line] (sa.south) -- (dec.north);
+  \end{tikzpicture}
+  \vspace{0.25cm}
+
+  \begin{itemize}
+    \item El encoder construye representaciones contextualizadas.
+    \item El decoder genera la salida usando lo ya producido.
+    \item Tambien consulta la informacion construida por el encoder.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Entrada del modelo}
+  \begin{itemize}
+    \item La entrada de Transformer es la suma de:
+      \begin{itemize}
+        \item \textbf{word embedding}
+        \item \textbf{positional encoding}
+      \end{itemize}
+    \item Como todas las palabras entran al mismo tiempo, se necesita codificar posicion.
+    \item El positional encoding conserva informacion de orden y distancia relativa.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{block}{Consecuencia}
+    Transformer puede procesar secuencias en paralelo sin perder completamente la nocion de orden.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Embedding y positional encoding}
+  \centering
+  \begin{tikzpicture}[node distance=0.7cm]
+    \node[smallbox] (w1) {token 1};
+    \node[smallbox, right=0.2cm of w1] (w2) {token 2};
+    \node[smallbox, right=0.2cm of w2] (w3) {token 3};
+
+    \node[box, below=0.9cm of w2] (emb) {Word Embedding};
+    \node[box, right=1.0cm of emb] (pe) {Positional\\Encoding};
+    \node[box, right=1.0cm of pe] (x) {Entrada final\\X};
+
+    \draw[line] (w1) -- (emb);
+    \draw[line] (w2) -- (emb);
+    \draw[line] (w3) -- (emb);
+    \draw[line] (emb) -- (pe);
+    \draw[line] (pe) -- (x);
+  \end{tikzpicture}
+  \vspace{0.25cm}
+
+  \begin{block}{Mensaje}
+    El embedding representa significado; el positional encoding reincorpora orden y posicion dentro de la secuencia.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Self-attention y entrenamiento}
+  \begin{itemize}
+    \item Cada token interactua con los demas tokens de la secuencia.
+    \item Esto permite capturar dependencias locales y globales.
+    \item En el decoder se usa \textbf{masking} para evitar mirar tokens futuros.
+    \item La salida final usa una capa lineal y \textbf{softmax} para producir probabilidades por token.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item Durante entrenamiento se compara la salida esperada con la salida del modelo.
+    \item En inferencia pueden usarse estrategias como \textit{greedy decoding} o \textit{beam search}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Escalamiento: de modelos densos a MoE}
+  \begin{itemize}
+    \item El tamano del modelo mejora capacidad, pero subir todos los parametros eleva mucho el costo.
+    \item Los modelos \textbf{densos} activan casi todos los parametros en cada paso.
+    \item \textbf{Mixture of Experts (MoE)} activa solo una parte de los expertos para cada token.
+    \item Asi se incrementan parametros totales sin crecer igual en computo por inferencia.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{MoE, GShard y gating}
+  \begin{itemize}
+    \item En MoE hay varias redes expertas y una red \textbf{gating} que decide cuales usar.
+    \item GShard aplica MoE a Transformer reemplazando algunas capas feed-forward.
+    \item El \textbf{top-k gating} selecciona los expertos mas probables para cada token.
+    \item Dos retos claves:
+      \begin{itemize}
+        \item balancear carga entre expertos
+        \item ejecutar esa seleccion de forma paralela y eficiente
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{MoE: ruteo hacia expertos}
+  \centering
+  \begin{tikzpicture}[node distance=0.55cm]
+    \node[box] (token) {Token /\\hidden state};
+    \node[box, right=1.0cm of token] (router) {Router /\\Gating};
+    \node[smallbox, above right=0.15cm and 0.9cm of router] (e1) {Expert 1};
+    \node[smallbox, right=0.9cm of router] (e2) {Expert 2};
+    \node[smallbox, below right=0.15cm and 0.9cm of router] (e3) {Expert 3};
+    \node[box, right=1.2cm of e2] (out) {Salida\\combinada};
+
+    \draw[line] (token) -- (router);
+    \draw[line] (router) -- (e1);
+    \draw[line] (router) -- (e2);
+    \draw[line] (router) -- (e3);
+    \draw[line] (e1) -- (out);
+    \draw[line] (e2) -- (out);
+    \draw[line] (e3) -- (out);
+  \end{tikzpicture}
+  \vspace{0.25cm}
+
+  \begin{itemize}
+    \item No todos los expertos se activan para cada token.
+    \item El gating busca eficiencia, pero debe evitar desbalance de carga.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Innovaciones recientes presentadas en el capitulo}
+  \small
+  \begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}X}
+    \toprule
+    \textbf{Tecnica} & \textbf{Aporte} \\
+    \midrule
+    MLA & optimiza la cache KV para reducir uso de memoria GPU y mejorar inferencia \\
+    DeepSeekMoE & router y expertos compartidos o enrutados para mayor eficiencia \\
+    MTP & prediccion de multiples tokens para acelerar decodificacion \\
+    FP8 training & acelera operadores intensivos manteniendo precision donde importa \\
+    DualPipe & superpone computo y comunicacion para reducir \textit{pipeline bubbles} \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\begin{frame}{Que nos enseña esto sobre modelos grandes}
+  \begin{itemize}
+    \item El exito de los modelos grandes no depende solo de tener mas parametros.
+    \item La arquitectura base debe representar bien el contexto: ahi entra Transformer.
+    \item La escalabilidad practica exige optimizaciones de memoria, ruteo, precision numerica y paralelismo.
+    \item El problema moderno ya no es solo aprender, sino aprender y servir el modelo con costo razonable.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+  \begin{itemize}
+    \item La atencion permite enfocar el calculo en informacion relevante.
+    \item Transformer supera limitaciones de Seq2Seq recurrente y se vuelve la base de los LLM.
+    \item Embeddings, positional encoding, self-attention, encoder-decoder y softmax forman el nucleo del algoritmo.
+    \item Para escalar a modelos grandes, aparecen enfoques como MoE, optimizacion de KV cache, FP8 y paralelismo mejorado.
+    \item Entender estos fundamentos ayuda a explicar por que los modelos grandes actuales son potentes y costosos a la vez.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Referencia}
+  \small
+  \begin{itemize}
+    \item Huawei. \textit{Algorithm Basics of Large-Scale Deep Learning}. En `huawei-2025.pdf`.
+    \item Base conceptual: attention, Seq2Seq, Transformer y optimizaciones modernas para modelos grandes.
+  \end{itemize}
+\end{frame}
+
+\end{document}

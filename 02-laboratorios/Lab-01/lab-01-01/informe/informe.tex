@@ -1,0 +1,377 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[normalem]{ulem}
+
+\geometry{margin=2.5cm}
+
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\title{Informe de Laboratorio\\CIB12 - Aprendizaje de Maquina y Mineria de Datos}
+\author{
+Curso: CIB12\\
+Departamento: Telecomunicaciones\\
+Docente: TELLO CANCHAPOMA, YURY OSCAR\\
+Alumno: Guevara Lázaro Jhunior Eduardo
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+
+\section{4. Procedimiento}
+
+\subsection{Etapa 1. Generación inicial de prompts en 10 LLM}
+
+En esta primera etapa se diseñó un prompt amplio y genérico, de acuerdo con la consigna del laboratorio, con el propósito de observar el comportamiento inicial de distintos modelos de lenguaje sin imponer restricciones de rol, formato, número de elementos o exigencias explícitas de verificación. El prompt utilizado fue el siguiente:
+
+\begin{quote}
+\textit{``Explícame cómo se diseña y desarrolla un proyecto completo de ingeniería electrónica basado en un ESP32 que incluya el diseño de una PCB y una aplicación móvil para interactuar con el sistema. Describe las etapas del desarrollo, los componentes electrónicos que suelen emplearse, las decisiones importantes de diseño, los protocolos de comunicación que pueden usarse, las consideraciones de alimentación y protección, las pruebas necesarias y los problemas más comunes que pueden aparecer tanto en el hardware como en el firmware y la app.''}
+\end{quote}
+
+Posteriormente, el prompt fue ejecutado en los modelos DeepSeek, Qwen, Gemini, Mistral, Perplexity, Ernie Bot, ChatGPT Free y ChatGPT Plus. Aunque la guía solicita al menos 10 LLM, en la presente entrega se cuenta con 8 salidas efectivamente registradas, por lo que esta diferencia se reconoce como una limitación metodológica del ejercicio.
+
+A partir de las respuestas obtenidas, se elaboró una tabla comparativa para registrar el enfoque general de cada modelo, así como los posibles fragmentos sospechosos de alucinación. En esta etapa, la clasificación realizada es preliminar, ya que la confirmación formal corresponde a la Etapa 3 mediante verificación en bases de datos indexadas y fuentes técnicas especializadas.
+
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\renewcommand{\arraystretch}{1.08}
+\scriptsize
+\begin{longtable}{|P{1.9cm}|P{4.4cm}|P{5.2cm}|P{2.2cm}|}
+\hline
+\textbf{LLM} & \textbf{Síntesis de la respuesta} & \textbf{Fragmentos sospechosos subrayados} & \textbf{Tipo preliminar} \\
+\hline
+\endfirsthead
+\hline
+\textbf{LLM} & \textbf{Síntesis de la respuesta} & \textbf{Fragmentos sospechosos subrayados} & \textbf{Tipo preliminar} \\
+\hline
+\endhead
+
+DeepSeek &
+Respuesta muy estructurada, con tablas, valores técnicos concretos, recomendaciones de diseño eléctrico, protección, pruebas y mitigación de fallos. &
+\uline{``Caída de tensión $\geq 1.2$ V a 1 A''}, \uline{``Reconexión en $<30$ s''}, \uline{``Capacitor de 470$\mu$F--1000$\mu$F''} &
+Factual \\
+\hline
+
+Qwen &
+Respuesta ordenada en fases secuenciales, con fuerte orientación a arquitectura del sistema, alimentación, protocolos y producción/despliegue. &
+\uline{``El ESP32 consume picos de $\sim 500$ mA al transmitir''}, \uline{``ESP-IDF incorpora FreeRTOS obligatoriamente''} &
+Factual / Lógica \\
+\hline
+
+Gemini &
+Respuesta técnica y detallada, con énfasis en integración vertical, decisiones de plataforma, consumo, RF y pruebas extremo a extremo. &
+\uline{``Picos de hasta 500 mA durante la transmisión Wi-Fi''}, \uline{``Separación de tierra analógica y digital''} &
+Factual / Lógica \\
+\hline
+
+Mistral &
+Respuesta clara y bien segmentada, orientada a flujo de desarrollo, selección de componentes, protocolos y validación del sistema integrado. &
+\uline{``ESP32-WROOM-32 (WiFi/Bluetooth clásico)''}, \uline{``Estrés térmico de $-20^\circ$C a $85^\circ$C''} &
+Factual \\
+\hline
+
+Perplexity &
+Respuesta comparativa y bastante sintética, con énfasis en arquitectura, PCB, protocolos y relación entre hardware, firmware y app. &
+\uline{``No exceder $\sim 12$--$40$ mA por pin''}, \uline{``Protección con Zener o TVS en líneas de alimentación y sensores''} &
+Factual \\
+\hline
+
+Ernie Bot &
+Respuesta generalista y ordenada por etapas, componentes, protocolos, pruebas y conclusiones, con menor profundidad técnica que otros modelos. &
+\uline{``Antena cerámica para mejorar la comunicación Wi-Fi/Bluetooth''}, \uline{``Sobrecalentamiento de componentes, especialmente el ESP32''} &
+Factual / Lingüística \\
+\hline
+
+ChatGPT Free &
+Respuesta estructurada y realista, con separación entre hardware, firmware y app, además de riesgos de integración y pruebas necesarias. &
+\uline{``Cristal de 40 MHz requerido para operación estable''}, \uline{``Consumo pico hasta $\sim 500$ mA en Wi-Fi''}, \uline{``Prueba de interferencia EMI''} &
+Factual \\
+\hline
+
+ChatGPT Plus &
+Respuesta balanceada y más cautelosa, con integración sistémica entre hardware, firmware y aplicación, y mejor manejo de incertidumbre. &
+\uline{``OTA exige particionado y recuperación robusta''}, \uline{``La antena debe respetar zona libre de cobre''}, \uline{``Wi-Fi/BLE generan picos superiores al consumo medio''} &
+Factual \\
+\hline
+
+\caption{Tabla comparativa de respuestas iniciales y fragmentos sospechosos de alucinación.} \\
+\end{longtable}
+\normalsize
+
+De manera general, se observó que todos los modelos respondieron dentro del tema solicitado, por lo que no se identificaron alucinaciones de contexto evidentes. Asimismo, en esta primera etapa no aparecieron citas académicas, DOI ni referencias bibliográficas específicas, por lo que tampoco se detectaron alucinaciones de referencia en sentido estricto. Sin embargo, sí se encontraron numerosos fragmentos con valores numéricos, afirmaciones técnicas específicas y generalizaciones de diseño que requieren verificación posterior.
+
+En consecuencia, las posibles alucinaciones detectadas en esta etapa se concentraron principalmente en la categoría de \textbf{alucinaciones factuales}, debido al uso de cifras, parámetros o recomendaciones técnicas presentadas como válidas sin respaldo visible. En menor medida, también se identificaron posibles \textbf{alucinaciones lógicas}, especialmente cuando algunos modelos generalizaron decisiones de ingeniería como si fueran universalmente aplicables, y \textbf{alucinaciones lingüísticas o estilísticas}, en aquellos casos donde la redacción fue correcta en la forma, pero demasiado amplia o poco verificable en su contenido.
+
+Como cierre de esta etapa, puede afirmarse que el prompt genérico permitió obtener respuestas útiles para una comparación inicial, pero también evidenció que, ante instrucciones amplias y abiertas, varios modelos tienden a introducir datos técnicos específicos sin aclarar su nivel de certeza. Esto justifica la necesidad de rediseñar el prompt en la siguiente etapa mediante estrategias de contextualización, especificidad, formato esperado y verificación explícita.
+
+
+
+
+
+
+
+\subsection{Etapa 2. Aplicación de ingeniería de prompts}
+
+En esta segunda etapa se rediseñó el prompt inicial aplicando estrategias de ingeniería de prompts orientadas a reducir ambigüedad, mejorar la estructura de salida y disminuir la probabilidad de alucinaciones. Siguiendo la guía del laboratorio, el nuevo diseño incorporó cuatro estrategias principales: \textbf{contextualización}, al asignar un rol experto al modelo; \textbf{especificidad}, al exigir cantidades exactas de elementos a incluir; \textbf{formato esperado}, al imponer una estructura obligatoria basada en tablas y listas; y \textbf{verificación explícita}, al pedir que el modelo indicara su nivel de certeza y evitara presentar datos dudosos como hechos confirmados.
+
+El prompt optimizado utilizado fue el siguiente:
+
+\begin{quote}
+\itshape
+``Eres un ingeniero electrónico especializado en sistemas embebidos, diseño de PCB y desarrollo de aplicaciones móviles para dispositivos IoT. Explica cómo se diseña y desarrolla un proyecto completo basado en un ESP32 que incluya una PCB y una aplicación móvil para interactuar con el sistema.
+
+Tu respuesta debe cumplir estas condiciones:
+\begin{itemize}
+\item Incluye exactamente 8 etapas del desarrollo.
+\item Incluye exactamente 10 componentes electrónicos comunes y explica para qué sirve cada uno.
+\item Incluye exactamente 6 decisiones importantes de diseño.
+\item Incluye exactamente 5 protocolos de comunicación que podrían usarse entre el ESP32, periféricos, la app móvil o la nube.
+\item Incluye exactamente 5 consideraciones de alimentación y protección.
+\item Incluye exactamente 6 pruebas necesarias para validar el sistema.
+\item Incluye exactamente 6 problemas comunes, distribuidos entre hardware, firmware y app móvil.
+\end{itemize}
+
+Formato de salida obligatorio:
+\begin{enumerate}
+\item Introducción breve.
+\item Tabla de etapas del desarrollo.
+\item Tabla de componentes electrónicos y función.
+\item Lista numerada de decisiones de diseño.
+\item Tabla de protocolos de comunicación, caso de uso y ventaja.
+\item Lista de consideraciones de alimentación y protección.
+\item Lista de pruebas necesarias.
+\item Lista de problemas comunes, separando hardware, firmware y aplicación móvil.
+\item Conclusión breve.
+\end{enumerate}
+
+Verificación explícita:
+\begin{itemize}
+\item No inventes referencias, autores, normas, DOI ni valores numéricos específicos si no estás seguro.
+\item Si mencionas un dato técnico específico, una norma o una referencia, indica al final entre paréntesis una de estas etiquetas: [seguro], [probable] o [no verificado].
+\item Si no estás seguro de un dato, dilo explícitamente.
+\item No presentes información dudosa como si fuera un hecho confirmado.''
+\end{itemize}
+\end{quote}
+
+Una vez rediseñado el prompt, este se ejecutó nuevamente en el mismo conjunto de modelos utilizados en la etapa anterior. En la presente evidencia quedaron registradas respuestas optimizadas de DeepSeek, Qwen, Gemini, Mistral, Perplexity, Ernie Bot y las variantes de ChatGPT empleadas en el experimento. Aunque la guía plantea idealmente trabajar con diez modelos, en esta entrega se dispone de ocho ejecuciones documentadas, lo que se declara como limitación metodológica.
+
+Los resultados mostraron un cambio claro respecto de la etapa inicial. Mientras que con el prompt genérico las respuestas presentaban estructuras heterogéneas, distinto nivel de profundidad y ausencia de marcas de certeza, con el prompt optimizado casi todos los modelos produjeron respuestas más uniformes, ordenadas y fáciles de comparar. La mayoría respetó la exigencia de incluir exactamente 8 etapas, 10 componentes, 6 decisiones, 5 protocolos, 5 consideraciones de alimentación y protección, 6 pruebas y 6 problemas comunes, además de utilizar tablas o listas claramente separadas.
+
+Asimismo, el rediseño mejoró la trazabilidad de posibles errores, ya que varios modelos comenzaron a etiquetar afirmaciones con marcas como \texttt{[seguro]}, \texttt{[probable]} o \texttt{[no verificado]}. Esto facilitó la identificación de fragmentos candidatos a verificación en la etapa siguiente, especialmente cuando aparecieron cifras concretas, recomendaciones técnicas particulares o afirmaciones normativas.
+
+No obstante, la optimización del prompt no eliminó por completo las posibles alucinaciones. Persistieron algunos fragmentos con cifras técnicas o afirmaciones específicas que seguían requiriendo contraste documental, por ejemplo valores concretos de corriente, recomendaciones de temperatura extrema, criterios de protección o afirmaciones sobre certificaciones, protocolos y límites eléctricos. En otras palabras, la mejora en el diseño del prompt redujo principalmente la ambigüedad estructural y el desorden expositivo, pero no garantizó por sí sola la veracidad total del contenido técnico.
+
+La comparación entre respuestas iniciales y optimizadas se resume en la Tabla \ref{tab:comparacion_etapa2}.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{|P{2.7cm}|P{4.6cm}|P{4.6cm}|}
+\hline
+\textbf{Criterio} & \textbf{Prompt genérico} & \textbf{Prompt optimizado} \\
+\hline
+Rol asignado al modelo & No se definió rol ni contexto profesional. & Se definió al modelo como ingeniero electrónico especializado en sistemas embebidos, PCB y apps IoT. \\
+\hline
+Nivel de especificidad & Abierto, sin cantidades exactas ni límites formales. & Se exigieron cantidades exactas de etapas, componentes, decisiones, protocolos, pruebas y problemas. \\
+\hline
+Formato de salida & Libre y variable según cada LLM. & Estructura obligatoria con tablas, listas y conclusión breve. \\
+\hline
+Control de incertidumbre & No se pidió reconocer dudas ni límites de certeza. & Se pidió etiquetar afirmaciones como \texttt{[seguro]}, \texttt{[probable]} o \texttt{[no verificado]}. \\
+\hline
+Facilidad de comparación entre modelos & Baja, por diferencias de extensión, orden y profundidad. & Alta, porque la mayoría respondió bajo una estructura semejante. \\
+\hline
+Facilidad de selección de claims para BDI & Media, porque había que extraer afirmaciones de textos muy heterogéneos. & Alta, debido a la presencia de etiquetas de certeza y mayor segmentación temática. \\
+\hline
+Tipo de problemas predominantes & Heterogeneidad, afirmaciones abiertas, datos técnicos sin contexto y respuestas menos auditables. & Persistencia de algunos datos técnicos discutibles, pero con menor ambigüedad formal y mayor facilidad de verificación. \\
+\hline
+\end{tabular}
+\caption{Comparación entre las respuestas obtenidas con prompt genérico y prompt optimizado.}
+\label{tab:comparacion_etapa2}
+\end{table}
+\setlength{\tabcolsep}{6pt}
+\normalsize
+
+A nivel cualitativo, se observó que las respuestas optimizadas fueron superiores en tres dimensiones. En primer lugar, presentaron \textbf{mayor claridad estructural}, ya que separaron explícitamente hardware, firmware, aplicación móvil, protocolos y pruebas. En segundo lugar, ofrecieron \textbf{mayor completitud controlada}, pues tendieron a cubrir todos los bloques exigidos por la consigna. En tercer lugar, lograron \textbf{mejor verificabilidad}, ya que las afirmaciones técnicas quedaron más visibles y delimitadas para su posterior contraste en una Base de Datos Indexada.
+
+En síntesis, la aplicación de ingeniería de prompts permitió transformar una consulta abierta en una instrucción técnica reproducible y comparable. La estrategia más efectiva fue la combinación de rol experto, cantidades exactas, formato obligatorio y declaración explícita de incertidumbre. Gracias a ello, las respuestas mejoradas resultaron más útiles para fines académicos, más fáciles de auditar y más adecuadas para la verificación documental desarrollada en la etapa siguiente.
+
+
+\subsection{Etapa 3. Verificación académica en BDI}
+
+En esta etapa se seleccionaron dos afirmaciones por cada modelo de lenguaje evaluado, priorizando aquellas que incluían valores técnicos, restricciones de diseño, protocolos, requisitos de hardware o afirmaciones presentadas con alto nivel de certeza. Dado que el tema del laboratorio se centra en diseño electrónico con ESP32, PCB y aplicación móvil, varias afirmaciones no remitían directamente a artículos científicos, sino a especificaciones técnicas del fabricante y documentación primaria de plataforma. Por ello, la verificación se realizó principalmente contra documentación oficial y técnica especializada, dejando constancia de los casos confirmados, contradichos o inconclusos.
+
+Asimismo, debe dejarse constancia de una limitación metodológica: aunque la guía solicita verificación sobre diez LLM, en la presente experiencia se trabajó con ocho respuestas efectivamente registradas y comparables, correspondientes a DeepSeek, Qwen, Gemini, Mistral, Perplexity, Ernie Bot, ChatGPT Free y ChatGPT Plus.
+
+\begin{landscape}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.06}
+\begin{longtable}{|P{2.2cm}|P{1.8cm}|P{5.7cm}|P{2.2cm}|P{5.3cm}|P{2.0cm}|P{3.9cm}|}
+\hline
+\textbf{LLM} & \textbf{Prompt usado} & \textbf{Afirmación seleccionada} & \textbf{Tipo preliminar} & \textbf{Verificación} & \textbf{Alucinación} & \textbf{Fuente real} \\
+\hline
+\endfirsthead
+
+\hline
+\textbf{LLM} & \textbf{Prompt usado} & \textbf{Afirmación seleccionada} & \textbf{Tipo preliminar} & \textbf{Verificación} & \textbf{Alucinación} & \textbf{Fuente real} \\
+\hline
+\endhead
+
+DeepSeek & Genérico & ``ESP-IDF (profesional, mayor control, RTOS)'' & Factual & Confirmado: ESP-IDF integra FreeRTOS como componente del framework. & No & Documentación oficial ESP-IDF / FreeRTOS \\
+\hline
+
+DeepSeek & Genérico & ``La antena del ESP32 debe mantenerse sin plano de tierra debajo y alejada del ruido digital'' & Factual & Confirmado en lo sustancial: las guías oficiales de hardware exigen keep-out, control del ruteo RF y separación respecto de señales de alta frecuencia. & No & Espressif Hardware Design Guidelines \\
+\hline
+
+Qwen & Genérico & ``El chip suelto requiere cristal de 40 MHz'' & Factual & Confirmado parcialmente: la documentación del ESP32 y del módulo WROOM indica cristal externo de 40 MHz para funcionalidad Wi-Fi/Bluetooth. & No & ESP32 Datasheet / ESP32-WROOM-32 Datasheet \\
+\hline
+
+Qwen & Genérico & ``Android 12+ requiere permisos BLUETOOTH\_SCAN y BLUETOOTH\_CONNECT para BLE'' & Factual & Confirmado: Android documenta esos permisos para escaneo y conexión Bluetooth en Android 12 o superior. & No & Android Developers \\
+\hline
+
+Gemini & Genérico & ``El ESP32 opera a 3.3 V'' & Factual & Confirmado: en módulos ESP32-WROOM-32 la alimentación recomendada se sitúa en el rango 3.0--3.6 V, siendo 3.3 V el valor nominal de uso. & No & ESP32-WROOM-32 Datasheet \\
+\hline
+
+Gemini & Genérico & ``La zona de antena requiere keep-out libre de cobre'' & Factual & Confirmado: las guías de diseño recomiendan un área de despeje alrededor de la antena y ausencia de cobre/ruteo en esa zona. & No & Espressif Hardware Design Guidelines \\
+\hline
+
+Mistral & Optimizado & ``ESP32-WROOM-32E / WROOM-32 incorpora Wi-Fi y Bluetooth clásico + BLE'' & Factual & Confirmado: la familia ESP32/WROOM documenta compatibilidad con Bluetooth BR/EDR y Bluetooth LE. & No & ESP32 Datasheet / ESP32-WROOM-32 Datasheet \\
+\hline
+
+Mistral & Optimizado & ``FreeRTOS integrado en ESP-IDF'' & Factual & Confirmado: la guía oficial de ESP-IDF lo declara explícitamente. & No & ESP-IDF Programming Guide \\
+\hline
+
+Perplexity & Optimizado & ``No exceder aproximadamente 12--40 mA por GPIO'' & Factual & Inconcluso: no se encontró en la documentación revisada una formulación oficial equivalente y universal en ese rango para todos los pines/módulos. & Sí, potencial & No se confirmó de forma directa \\
+\hline
+
+Perplexity & Optimizado & ``La app puede perder el dispositivo BLE por permisos de Bluetooth no aceptados'' & Factual & Confirmado parcialmente: Android exige permisos de Bluetooth/nearby devices; la pérdida de descubrimiento por permisos es técnicamente plausible. & No & Android Developers \\
+\hline
+
+Ernie Bot & Genérico & ``Antena externa o cerámica para mejorar la comunicación'' & Factual / Lingüística & Inconcluso: es una recomendación genérica válida en algunos diseños, pero no es una exigencia general del ESP32 ni quedó respaldada como regla universal. & Parcial & Soporte insuficiente como afirmación universal \\
+\hline
+
+Ernie Bot & Genérico & ``Sobrecalentamiento de componentes, especialmente el ESP32'' & Lingüística / Factual & Inconcluso: posible en ciertos escenarios, pero no aparece como condición general documentada para todo proyecto ESP32. & Parcial & No se confirmó como regla general \\
+\hline
+
+ChatGPT Free & Genérico & ``Cristal de 40 MHz requerido para operación estable'' & Factual & Confirmado en el contexto Wi-Fi/Bluetooth y del módulo WROOM-32, que integra cristal de 40 MHz. & No & ESP32 Datasheet / ESP32-WROOM-32 Datasheet \\
+\hline
+
+ChatGPT Free & Genérico & ``Prueba de interferencia EMI/EMC'' & Lingüística / Factual & Confirmado parcialmente: es una práctica técnica razonable en validación de hardware, aunque no siempre obligatoria en prototipos académicos. & No & Guías de diseño y validación de hardware \\
+\hline
+
+ChatGPT Plus & Optimizado & ``FreeRTOS integrado [seguro]'' & Factual & Confirmado: la documentación oficial lo establece de manera explícita. & No & ESP-IDF Programming Guide \\
+\hline
+
+ChatGPT Plus & Optimizado & ``Manejo de permisos en Android [probable]'' & Factual & Confirmado: la plataforma Android exige permisos específicos para Bluetooth y dispositivos cercanos en versiones modernas. & No & Android Developers \\
+\hline
+
+\caption{Verificación de afirmaciones seleccionadas en la Etapa 3.}
+\label{tab:verificacion_bdi}
+\end{longtable}
+\setlength{\tabcolsep}{6pt}
+\end{landscape}
+\normalsize 
+
+A partir de la verificación realizada, se observó que la mayoría de afirmaciones relacionadas con arquitectura general, uso de ESP-IDF, Bluetooth, alimentación nominal del módulo y lineamientos de PCB sí pudieron ser confirmadas en fuentes técnicas primarias. En cambio, las afirmaciones más problemáticas fueron aquellas que introducían rangos numéricos muy concretos sin contexto suficiente, por ejemplo límites de corriente por GPIO o valores universales de diseño aplicados a todos los escenarios.
+
+En términos de clasificación, las alucinaciones más frecuentes siguieron siendo de tipo \textbf{factual}, ya que los modelos tendieron a presentar como seguros algunos números o umbrales técnicos que no siempre aparecieron respaldados de forma directa en la documentación primaria consultada. En segundo lugar aparecieron formulaciones \textbf{lingüísticas o estilísticas}, especialmente cuando la respuesta sonaba técnica y convincente, pero en realidad expresaba recomendaciones demasiado generales, imposibles de confirmar como regla universal.
+
+Como resultado de esta etapa, puede afirmarse que los modelos mostraron mejor desempeño cuando se limitaron a describir principios generales de diseño y peor desempeño cuando ofrecieron cifras exactas o generalizaciones fuertes sin fuente explícita. Esta observación servirá de base para el análisis comparativo de la etapa siguiente.
+
+
+
+
+
+\subsection{Etapa 4. Análisis y discusión comparativa}
+
+A partir de la comparación entre las respuestas generadas con el prompt genérico y las obtenidas con el prompt optimizado, se identificaron diferencias relevantes en tres dimensiones: cantidad y tipo de afirmaciones potencialmente alucinadas, impacto de las estrategias de ingeniería de prompts y nivel de confiabilidad académica de cada modelo.
+
+En primer lugar, con la evidencia reunida no es metodológicamente correcto afirmar de manera absoluta que un único modelo fue el que más alucinó en todo el experimento, ya que no se realizó un conteo exhaustivo de cada fragmento sospechoso en la totalidad de respuestas. Sin embargo, sí es posible establecer tendencias comparativas a partir de los fragmentos seleccionados y de la verificación documental desarrollada en la etapa anterior.
+
+De manera general, los modelos que más concentraron \textbf{posibles alucinaciones factuales} fueron aquellos que introdujeron cifras técnicas específicas, umbrales eléctricos o reglas de diseño muy concretas sin acompañarlas de una aclaración sobre su nivel de certeza. En esta tendencia destacaron principalmente \textbf{DeepSeek}, \textbf{Perplexity} y \textbf{ChatGPT Free}, debido a que sus respuestas incluyeron valores numéricos o afirmaciones técnicas cerradas que exigieron verificación posterior y que, en algunos casos, no pudieron confirmarse de forma directa. En particular, Perplexity resultó el caso más problemático dentro de las afirmaciones verificadas, ya que presentó como segura una cifra de corriente por GPIO que no pudo confirmarse de manera directa en la documentación técnica revisada.
+
+Por otro lado, \textbf{Ernie Bot} mostró una tendencia distinta: más que producir errores claramente cuantificables, generó afirmaciones amplias y técnicamente plausibles, pero demasiado generales para ser confirmadas como reglas universales. Por ello, su patrón de error se asoció más con \textbf{alucinaciones lingüísticas o estilísticas} y, en menor grado, con alucinaciones factuales de baja precisión. En cambio, \textbf{Qwen}, \textbf{Gemini} y \textbf{Mistral} ofrecieron respuestas relativamente más estables, aunque también incluyeron afirmaciones específicas que requirieron validación documental.
+
+En segundo lugar, el análisis comparativo muestra que las estrategias de ingeniería de prompts sí redujeron errores y mejoraron la utilidad académica de las respuestas. La estrategia de \textbf{contextualización} ayudó a que los modelos adoptaran una voz técnica más consistente con el área de ingeniería electrónica. La \textbf{especificidad} redujo respuestas vagas o excesivamente libres, ya que obligó a cubrir exactamente un número determinado de etapas, componentes, decisiones, protocolos, pruebas y problemas. El \textbf{formato esperado} facilitó la comparación entre modelos, pues homogeneizó la estructura de salida mediante tablas y listas. Finalmente, la \textbf{verificación explícita} fue la estrategia más útil para el análisis posterior, ya que forzó a varios modelos a reconocer incertidumbre mediante etiquetas como \texttt{[seguro]}, \texttt{[probable]} y \texttt{[no verificado]}.
+
+Esto significa que el prompt optimizado no eliminó completamente las alucinaciones, pero sí produjo tres mejoras claras. Primero, disminuyó la ambigüedad formal de las respuestas. Segundo, volvió más visibles los puntos técnicamente sensibles que requerían verificación. Tercero, redujo la apariencia de certeza injustificada, especialmente en los modelos que sí obedecieron la instrucción de marcar el nivel de confianza de sus afirmaciones.
+
+En tercer lugar, respecto a la confiabilidad académica, el modelo que mostró el comportamiento más consistente fue \textbf{ChatGPT Plus}, no porque estuviera libre de posibles errores, sino porque presentó una respuesta más equilibrada, mejor estructurada y con mayor disposición a matizar afirmaciones técnicas. También \textbf{Gemini} y \textbf{Mistral} mostraron un desempeño sólido en términos de organización y pertinencia temática. En contraste, \textbf{Perplexity} destacó por una respuesta ordenada pero con al menos una afirmación técnica puntual no confirmada, mientras que \textbf{Ernie Bot} fue menos confiable para fines académicos estrictos debido a su tendencia a formular recomendaciones generales difíciles de verificar con precisión.
+
+La Tabla \ref{tab:discusion_comparativa} resume estas tendencias.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{|P{2.1cm}|P{3.5cm}|P{4.5cm}|P{3.2cm}|}
+\hline
+\textbf{LLM} & \textbf{Tendencia principal} & \textbf{Tipo de alucinación predominante} & \textbf{Valoración académica} \\
+\hline
+DeepSeek & Respuesta muy técnica, con varios valores y recomendaciones específicas & Factual & Buena, pero requiere verificación de cifras \\
+\hline
+Qwen & Respuesta estructurada y técnica, con afirmaciones concretas sobre plataforma & Factual / Lógica & Buena \\
+\hline
+Gemini & Respuesta completa, clara y relativamente estable & Factual & Muy buena \\
+\hline
+Mistral & Respuesta ordenada y consistente en el flujo de desarrollo & Factual & Muy buena \\
+\hline
+Perplexity & Respuesta sintética y clara, pero con al menos una afirmación no confirmada & Factual & Media-alta \\
+\hline
+Ernie Bot & Respuesta generalista, menos precisa y más difícil de auditar & Lingüística / Factual & Media \\
+\hline
+ChatGPT Free & Respuesta útil, pero con varias afirmaciones técnicas puntuales que exigen contraste & Factual & Buena \\
+\hline
+ChatGPT Plus & Respuesta más balanceada, estructurada y cautelosa frente a la incertidumbre & Factual, con mejor control de certeza & Muy alta \\
+\hline
+\end{tabular}
+\caption{Discusión comparativa de tendencias de alucinación y confiabilidad académica.}
+\label{tab:discusion_comparativa}
+\end{table}
+\setlength{\tabcolsep}{6pt}
+\normalsize
+
+En síntesis, el análisis comparativo permite concluir que la mayor parte de los errores observados no correspondió a invención de referencias bibliográficas, sino a \textbf{alucinaciones factuales} relacionadas con cifras, límites técnicos, recomendaciones de diseño o formulaciones excesivamente generales presentadas como hechos firmes. Asimismo, se comprobó que el diseño del prompt influye directamente en la calidad de la respuesta: cuanto más claro, específico, estructurado y explícito fue el prompt, menor fue la dispersión de resultados y mayor la posibilidad de auditoría académica.
+
+Por tanto, la principal lección de esta etapa es que la confiabilidad de un LLM no depende únicamente del modelo en sí, sino también del nivel de precisión con que se formule la instrucción. Un prompt bien diseñado no reemplaza la verificación documental, pero sí reduce significativamente el riesgo de error y mejora la calidad del trabajo académico.
+
+\section{5. Resultados esperados}
+
+A partir del desarrollo del laboratorio se obtuvieron resultados consistentes con los objetivos planteados en la guía. En primer lugar, fue posible identificar y clasificar distintos tipos de alucinaciones en las respuestas generadas por los modelos evaluados. Las más frecuentes fueron las \textbf{alucinaciones factuales}, especialmente cuando los LLM introdujeron valores numéricos, límites eléctricos, recomendaciones de diseño o afirmaciones técnicas específicas sin una fuente visible que las respaldara. En menor proporción, también se observaron \textbf{alucinaciones lógicas}, cuando algunos modelos generalizaron decisiones de ingeniería como si fueran universalmente válidas, y \textbf{alucinaciones lingüísticas o estilísticas}, sobre todo en respuestas formalmente correctas pero poco verificables.
+
+En segundo lugar, la comparación entre las respuestas iniciales y las respuestas obtenidas con el prompt optimizado mostró que la \textbf{ingeniería de prompts mejora de manera significativa la calidad de salida}. El uso de contextualización, especificidad, formato esperado y verificación explícita permitió reducir la ambigüedad, homogeneizar la estructura de las respuestas y facilitar la detección de afirmaciones críticas. Esto no eliminó completamente los errores, pero sí disminuyó la dispersión entre modelos y aumentó la posibilidad de auditoría académica.
+
+En tercer lugar, la etapa de verificación documental confirmó que no todas las afirmaciones técnicas emitidas por los LLM podían aceptarse como válidas sin contraste externo. Varias afirmaciones generales sobre ESP32, integración con ESP-IDF, Bluetooth, requisitos de alimentación y lineamientos básicos de diseño de PCB pudieron ser confirmadas en documentación técnica primaria. Sin embargo, algunas cifras concretas o recomendaciones expresadas con exceso de seguridad no lograron confirmarse de manera directa, por lo que fueron consideradas potenciales alucinaciones o afirmaciones inconclusas. Esto demostró la importancia de complementar el uso de IA con verificación en fuentes confiables.
+
+En cuarto lugar, el análisis comparativo permitió establecer diferencias de confiabilidad entre modelos. En términos generales, los modelos que mostraron mayor utilidad académica fueron aquellos que produjeron respuestas mejor estructuradas, más cautelosas en sus afirmaciones y más consistentes con el prompt optimizado. En contraste, los modelos que tendieron a introducir cifras técnicas muy precisas sin justificación explícita resultaron más riesgosos para tareas académicas o de apoyo al diseño.
+
+Debe señalarse, no obstante, que existe una limitación metodológica importante en esta experiencia: aunque el laboratorio plantea idealmente la comparación de al menos diez modelos, la presente evidencia documentada se basó en ocho respuestas efectivamente registradas y comparables. Por ello, los resultados obtenidos deben interpretarse como válidos dentro del conjunto analizado, pero no como una evaluación exhaustiva del universo total de LLM disponibles.
+
+En síntesis, los resultados del laboratorio permiten concluir que los modelos de lenguaje son herramientas útiles para generar explicaciones técnicas iniciales y organizar información compleja, pero no deben considerarse fuentes finales de verdad en contextos académicos o de ingeniería. La principal contribución de este ejercicio fue demostrar que la calidad de las respuestas depende en gran medida de cómo se formula el prompt y de si posteriormente se realiza una verificación rigurosa de las afirmaciones producidas.
+
+\subsection{Conclusiones críticas}
+
+A partir de los resultados obtenidos, se concluye que la \textbf{fiabilidad de un LLM no depende únicamente del modelo, sino también del diseño de la instrucción que recibe}. Un prompt amplio y genérico favorece respuestas más variables, menos controladas y con mayor probabilidad de incluir afirmaciones técnicas no verificadas. En cambio, un prompt optimizado, con rol definido, estructura obligatoria, nivel de detalle controlado y solicitud explícita de reconocimiento de incertidumbre, produce respuestas más comparables, auditables y útiles para el análisis académico.
+
+Asimismo, se concluye que la \textbf{verificación documental es indispensable}. Incluso cuando una respuesta parece técnicamente correcta y está bien redactada, puede contener datos imprecisos, exageraciones o generalizaciones que solo se detectan al contrastarla con fuentes confiables. Por tanto, en contextos de investigación, docencia o desarrollo tecnológico, el uso de LLM debe entenderse como un apoyo para explorar, organizar o resumir información, pero no como sustituto de la validación técnica y bibliográfica.
+
+Finalmente, este laboratorio demuestra que la \textbf{ingeniería de prompts constituye una competencia crítica} para el uso responsable de inteligencia artificial generativa. Saber formular instrucciones claras, específicas y verificables no solo mejora la calidad de las respuestas, sino que también reduce el riesgo de error y fortalece el valor académico del trabajo realizado.
+
+..
+\end{document}

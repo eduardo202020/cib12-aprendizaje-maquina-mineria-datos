@@ -23,18 +23,13 @@ cib12-aprendizaje-maquina-mineria-datos/
 │   ├── .nojekyll
 │   └── presentaciones/
 │       └── lab00.html
-├── laboratorios/
-│   └── lab00-plantilla/
-│       ├── README.md
-│       ├── datos/
-│       ├── notebooks/
-│       ├── src/
-│       ├── resultados/
-│       ├── informe/
-│       │   └── informe.md
-│       └── presentacion/
-│           ├── diapositivas.md
-│           └── guion.md
+├── 02-laboratorios/
+│   ├── Lab-01/
+│   ├── Lab-02/
+│   ├── Lab-03/
+│   ├── Lab-04/
+│   ├── Lab-05/
+│   └── Lab-06/
 ├── informes/                  # PDFs finales exportados
 ├── presentaciones/            # PDFs de exposicion exportados
 └── proyecto-final/
@@ -42,7 +37,7 @@ cib12-aprendizaje-maquina-mineria-datos/
 
 ## Flujo recomendado
 
-1. Duplica `laboratorios/lab00-plantilla/` y renombralo a `lab01`, `lab02`, etc.
+1. Usa `02-laboratorios/` como ubicacion principal de los laboratorios.
 2. Trabaja el analisis en `notebooks/` o `src/`.
 3. Guarda tablas, graficos y metricas en `resultados/`.
 4. Redacta el informe en `informe/informe.md`.
@@ -74,9 +69,9 @@ La pagina principal quedara en algo como:
 
 ## Siguiente paso sugerido
 
-Cuando salga el primer laboratorio:
+Cuando trabajes un nuevo laboratorio:
 
-1. copia `laboratorios/lab00-plantilla` a `laboratorios/lab01`;
-2. cambia los titulos;
-3. agrega enlaces a `docs/index.html`;
+1. crea o completa su carpeta dentro de `02-laboratorios/`;
+2. organiza el material en `docs`, `src`, `datos`, `resultados` y `notebooks` si aplica;
+3. agrega enlaces a `docs/index.html` o a la landing correspondiente;
 4. exporta el informe y las diapositivas a PDF.

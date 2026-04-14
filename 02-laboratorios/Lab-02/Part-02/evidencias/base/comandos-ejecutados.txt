@@ -1,0 +1,12 @@
+powershell -ExecutionPolicy Bypass -File 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\scripts\bootstrap_env.ps1
+
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\prepare_datasets.py --fingerprint-name lab02_ble_ferrero
+
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values
+
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant without_empty_values
+
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\train_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --seed 21 --tag seed21
+python 01-organizacion-cib12\02-laboratorios\Lab-02\Part-02\src\evaluate_m2.py --fingerprint-name lab02_ble_ferrero --variant with_empty_values --tag seed21

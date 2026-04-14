@@ -1,0 +1,239 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\definecolor{cibblue}{HTML}{0F4C81}
+\definecolor{cibteal}{HTML}{1F7A8C}
+\definecolor{cibgold}{HTML}{D9A441}
+
+\setbeamercolor{structure}{fg=cibblue}
+\setbeamercolor{frametitle}{fg=white,bg=cibblue}
+\setbeamercolor{title}{fg=white,bg=cibblue}
+\setbeamercolor{block title}{fg=white,bg=cibteal}
+\setbeamercolor{block body}{bg=black!3}
+
+\title{Parte I: Paper Individual}
+\subtitle{Bluetooth low energy indoor positioning:\\A fingerprinting neural network approach}
+\author{Jhunior Guevara Lázaro\\ Curso CIB12 - Aprendizaje de M\'aquina y Miner\'ia de Datos}
+\institute{Laboratorio 02}
+\date{Abril 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Referencia del paper}
+  \begin{itemize}
+    \item \textbf{Autores}: Alberto Ferrero-L\'opez, Antonio Javier Gallego y Miguel Angel Lozano.
+    \item \textbf{Revista}: \textit{Internet of Things}, volumen 31, 2025.
+    \item \textbf{Indexaci\'on}: revista indexada en \textbf{Scopus} y difundida en ScienceDirect.
+    \item \textbf{DOI}: \href{https://doi.org/10.1016/j.iot.2025.101565}{10.1016/j.iot.2025.101565}.
+    \item \textbf{Tema}: posicionamiento indoor con BLE, RSSI, fingerprinting y redes neuronales.
+    \item \textbf{Motivo de elecci\'on}: combina IA aplicada a telecomunicaciones, comparaci\'on experimental y c\'odigo abierto reproducible.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Introducci\'on}
+  \begin{block}{Problema}
+    El GPS pierde precisi\'on en interiores por atenuaci\'on, obst\'aculos y multitrayectoria. Por eso se requieren t\'ecnicas especializadas para localizaci\'on indoor.
+  \end{block}
+  \begin{itemize}
+    \item BLE ofrece bajo consumo, bajo costo y disponibilidad en dispositivos comunes.
+    \item El indicador RSSI permite estimar proximidad, pero es ruidoso e inestable.
+    \item El paper propone que la mejora no depende solo del modelo, sino tambi\'en de c\'omo se capturan y filtran las se\~nales.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Antecedentes}
+  \begin{itemize}
+    \item \textbf{Fingerprinting probabil\'istico}: usa huellas de se\~nal y m\'etodos como Wasserstein o filtros Monte Carlo.
+    \item \textbf{Fingerprinting con redes neuronales}: aprende a mapear vectores RSSI hacia posiciones o celdas.
+    \item \textbf{Trilateraci\'on BLE}: sirve como l\'inea base, pero sufre mucho por ruido y modelos distancia-se\~nal.
+  \end{itemize}
+  \vspace{0.3cm}
+  \begin{block}{Vac\'io identificado por los autores}
+    Varios trabajos previos no detallan bien la captura, el filtrado o la evaluaci\'on real sobre trayectorias, y dependen demasiado de m\'etricas de entrenamiento.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Antecedentes clave}
+  \scriptsize
+  \begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}p{1.9cm}>{\RaggedRight\arraybackslash}p{1.1cm}>{\RaggedRight\arraybackslash}X}
+    \toprule
+    \textbf{Autor / trabajo} & \textbf{A\~no} & \textbf{Hallazgo relevante para este paper} \\
+    \midrule
+    Dani\c{s} et al. & 2017 / 2021 & Fingerprinting probabil\'istico con Wasserstein y filtro Monte Carlo adaptativo; reportan 3.064 m de error medio y sirven como estado del arte previo. \\
+    Faragher y Harle & 2015 & Analizan a fondo BLE y sus problemas de atenuaci\'on, ruido y multipath; inspiran la etapa de captura y filtrado propuesta. \\
+    Puckdeevongs & 2021 & Propone una red neuronal para RSSI indoor; aporta lineamientos de dise\~no, pero con menos detalle sobre captura y validaci\'on real. \\
+    Joseph et al. / Adege et al. & 2018 & Usan redes neuronales para localizaci\'on WiFi o indoor, pero eval\'uan poco el desempe\~no online y omiten detalles de preprocesamiento. \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\begin{frame}{Objetivo e hip\'otesis inferida}
+  \begin{itemize}
+    \item Analizar una metodolog\'ia completa de posicionamiento indoor basada en BLE y fingerprinting.
+    \item Optimizar la captura y el filtrado de RSSI antes de alimentar los modelos.
+    \item Comparar ocho dise\~nos de redes neuronales contra trilateraci\'on cl\'asica.
+    \item Evaluar el rendimiento real sobre trayectorias online, no solo sobre m\'etricas de entrenamiento.
+  \end{itemize}
+  \vspace{0.3cm}
+  \begin{block}{Hip\'otesis inferida}
+    Un pipeline de captura y filtrado de RSSI, combinado con redes neuronales de fingerprinting, puede superar a la trilateraci\'on y al estado del arte en error medio de localizaci\'on indoor.
+  \end{block}
+\end{frame}
+
+\begin{frame}{M\'etodos: pipeline propuesto}
+  \begin{enumerate}
+    \item \textbf{Captura BLE}: un beacon transmite y 12 sensores registran valores RSSI.
+    \item \textbf{Ventana temporal}: las muestras se almacenan en una ventana con longitud m\'inima y m\'axima.
+    \item \textbf{Filtrado}: se suavizan lecturas y se genera un fingerprint con un valor por sensor.
+    \item \textbf{Predicci\'on}: el fingerprint entra a un modelo de regresi\'on o clasificaci\'on, o a trilateraci\'on.
+  \end{enumerate}
+  \vspace{0.2cm}
+  \begin{itemize}
+    \item Si un sensor no cumple el m\'inimo de lecturas, se asigna el valor \texttt{100} como marcador de dato vac\'io.
+    \item El paper resalta dos fases: \textit{offline} para construir huellas y \textit{online} para predecir posiciones reales.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{M\'etodos: datos y configuraci\'on experimental}
+  \begin{itemize}
+    \item \textbf{Dataset}: \textit{Position-Annotated-BLE-RSSI-Dataset}.
+    \item \textbf{Entorno}: sala de 20.66 m \(\times\) 17.64 m.
+    \item \textbf{Sensado}: 12 sensores BLE y un beacon.
+    \item \textbf{Ground truth}: visi\'on por computador con marcadores ArUco, precisi\'on aproximada de 0.05 m.
+    \item \textbf{Entrenamiento}: malla offline \(9 \times 9\) con partici\'on 80/20 para entrenamiento y validaci\'on.
+    \item \textbf{Prueba}: trayectorias online evaluadas con distancia euclidiana.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{M\'etodos: modelos y par\'ametros}
+  \begin{columns}[T]
+    \column{0.52\textwidth}
+      \textbf{Modelos comparados}
+      \begin{itemize}
+        \item M1: baseline denso.
+        \item M2: red densa m\'as profunda.
+        \item M3 y M4: incorporan m\'ascara para valores vac\'ios.
+        \item M5: CNN 1D.
+        \item M6, M7 y M8: clasificaci\'on por grillas.
+        \item Trilateraci\'on como baseline cl\'asico.
+      \end{itemize}
+    \column{0.48\textwidth}
+      \textbf{Par\'ametros clave}
+      \begin{itemize}
+        \item \(Sreads\_min = 2\)
+        \item \(Svalid\_min = 10\) o \(12\)
+        \item filtro \textbf{Max}
+        \item \(\omega_{min} = 0.5\) s
+        \item \(\omega_{max} = 2.5\) s
+        \item batch size 256
+        \item hasta 1000 \'epocas con early stopping
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Resultados principales}
+  \small
+  \begin{tabularx}{\textwidth}{>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}X>{\RaggedRight\arraybackslash}X}
+    \toprule
+    \textbf{Escenario} & \textbf{Mejores modelos} & \textbf{Error medio reportado} \\
+    \midrule
+    Con valores vac\'ios & M4 y M2 & M4: 1.8957 m, M2: 2.0368 m \\
+    Sin valores vac\'ios & M2 y M5 & M2: 2.0559 m, M5: 2.0766 m \\
+    Trilateraci\'on & Baseline cl\'asico & 3.7252 m / 3.3583 m \\
+    Estado del arte previo & Adaptive SMC & 3.064 m \\
+    \bottomrule
+  \end{tabularx}
+  \vspace{0.25cm}
+  \begin{itemize}
+    \item Las redes de regresi\'on superan a las de clasificaci\'on en ambos escenarios.
+    \item M2 destaca por estabilidad; M4 sobresale cuando hay datos faltantes o ruido.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Esquema comparativo del aporte}
+  \small
+  \begin{columns}[T]
+    \column{0.48\textwidth}
+      \begin{block}{Trabajos previos}
+        \begin{itemize}
+          \item Se enfocan en el modelo o en la m\'etrica de entrenamiento.
+          \item Reportan menos detalle sobre captura, filtrado y datos faltantes.
+          \item La evaluaci\'on real sobre trayectorias suele ser limitada.
+        \end{itemize}
+      \end{block}
+    \column{0.48\textwidth}
+      \begin{block}{Aporte del paper}
+        \begin{itemize}
+          \item Integra captura BLE, filtrado y fingerprinting en un solo pipeline.
+          \item Compara 8 modelos y trilateraci\'on bajo dos escenarios.
+          \item Eval\'ua con distancia euclidiana sobre trayectorias online.
+        \end{itemize}
+      \end{block}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Discusi\'on}
+  \begin{itemize}
+    \item M2 mejora a M1 sin aumentar demasiado el costo computacional, por lo que es una opci\'on s\'olida para aplicaciones en tiempo real.
+    \item M3 y M4 muestran que modelar expl\'icitamente los valores vac\'ios ayuda cuando la se\~nal es incompleta.
+    \item Las m\'etricas de \textit{loss} y \textit{accuracy} no bastan para juzgar el rendimiento real de localizaci\'on.
+    \item En clasificaci\'on, una celda cercana mal clasificada cuenta igual que una muy lejana; por eso la distancia euclidiana es una m\'etrica m\'as adecuada.
+  \end{itemize}
+  \vspace{0.2cm}
+  \begin{block}{Idea central}
+    El aporte del paper no es solo una red neuronal, sino una metodolog\'ia integral: captura, filtrado, representaci\'on del fingerprint y evaluaci\'on real.
+  \end{block}
+\end{frame}
+
+\begin{frame}{An\'alisis cr\'itico}
+  \small
+  \begin{itemize}
+    \item \textbf{Fortaleza metodol\'ogica}: el paper no se limita al modelo; controla captura, filtrado, preprocesamiento y evaluaci\'on online.
+    \item \textbf{Fortaleza de reproducibilidad}: publica DOI, dataset y repositorios de modelos y librer\'ias, lo que facilita la Parte II del laboratorio.
+    \item \textbf{Limitaci\'on experimental}: el estudio depende de un solo dataset y un entorno concreto; eso puede afectar la generalizaci\'on a otros edificios.
+    \item \textbf{Tensi\'on documental}: la ficha editorial indica ``No data was used'', pero el art\'iculo s\'i describe y cita un dataset p\'ublico; conviene mencionarlo como observaci\'on cr\'itica.
+    \item \textbf{Pregunta cr\'itica}: \textquestiondown la mejora proviene principalmente de la red neuronal o del proceso de filtrado y construcci\'on del fingerprint?
+    \item \textbf{Interpretaci\'on personal}: el mayor valor del paper est\'a en el pipeline completo y en la forma de evaluar, m\'as que en una arquitectura aislada.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusiones}
+  \begin{itemize}
+    \item El paper demuestra que BLE + fingerprinting + redes neuronales puede mejorar de forma importante la localizaci\'on indoor.
+    \item M4 es el mejor modelo cuando existen valores vac\'ios; M2 es el m\'as estable entre escenarios.
+    \item Los resultados resaltan la importancia del preprocesamiento y de evaluar sobre trayectorias reales.
+    \item Como limitaci\'on, la calidad del dataset y la variabilidad del entorno pueden afectar la generalizaci\'on.
+    \item Para la Parte II del laboratorio, M2 es el candidato m\'as razonable para reproducir y comparar.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Repositorios y fuentes}
+  \small
+  \begin{itemize}
+    \item Paper: \href{https://doi.org/10.1016/j.iot.2025.101565}{doi.org/10.1016/j.iot.2025.101565}
+    \item Dataset: \href{https://github.com/philotuxo/Position-Annotated-BLE-RSSI-Dataset}{philotuxo/Position-Annotated-BLE-RSSI-Dataset}
+    \item Modelos: \href{https://github.com/bertoferrero-research/models_fingerprint_positioning}{bertoferrero-research/models\_fingerprint\_positioning}
+    \item Captura y filtrado: \href{https://github.com/bertoferrero-research/rssi_capturing_filtering_library}{bertoferrero-research/rssi\_capturing\_filtering\_library}
+  \end{itemize}
+\end{frame}
+
+\end{document}

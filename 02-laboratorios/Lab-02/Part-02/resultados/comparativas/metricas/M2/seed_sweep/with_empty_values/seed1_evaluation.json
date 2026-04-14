@@ -1,0 +1,14 @@
+{
+  "fingerprint_name": "lab02_ble_ferrero",
+  "variant": "with_empty_values",
+  "output_variant": "with_empty_values_seed1",
+  "distance_stats": {
+    "count": 662,
+    "min": 0.049567660331628086,
+    "q1": 1.346552860096438,
+    "median": 2.0614262477625913,
+    "mean": 2.3626585024270126,
+    "q3": 3.071602133635409,
+    "max": 15.607613660194204
+  }
+}

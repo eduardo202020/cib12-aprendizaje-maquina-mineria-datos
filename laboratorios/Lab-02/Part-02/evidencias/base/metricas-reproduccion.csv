@@ -1,4 +1,0 @@
-escenario,mean_m,median_m,min_m,max_m,samples,epochs,final_loss,final_val_loss,comentario
-with_empty_values,2.3690,2.1413,0.0743,15.9757,662,60,0.01735,0.03107,Reproduccion base del escenario con valores vacios
-with_empty_values_seed21,2.3169,1.9804,0.1214,16.1974,662,55,0.01737,0.02942,Mejor corrida exploratoria del barrido de semillas
-without_empty_values,2.0750,1.8430,0.0517,8.1161,486,30,0.00032,0.01743,Escenario mas cercano a los resultados del paper
