@@ -6,37 +6,37 @@ Inteligencia Artificial y Comunicacion Inalambrica.
 
 ## Problema general
 
-¿Como mejorar la calidad del servicio de guia virtual en museos y espacios culturales mediante un modelo de aprendizaje profundo con mecanismos de atencion aplicado a senales Wi-Fi/BLE para localizacion indoor durante 2026?
+¿Como mejorar la calidad del servicio de guia virtual en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE en museos y espacios culturales, 2026?
 
 ## Objeto de estudio
 
-Servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE en museos y espacios culturales.
+Servicios de guia virtual.
 
 ## Problemas especificos
 
 1. ¿De que manera la variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos afectan la precision de localizacion indoor en servicios de guia virtual?
-2. ¿En que medida un modelo de aprendizaje profundo con mecanismos de atencion puede mejorar la precision de localizacion indoor frente a enfoques convencionales o baselines?
-3. ¿Como impacta la mejora de la precision de localizacion indoor en la calidad del servicio de guia virtual para el visitante?
+2. ¿En que medida un modelo de aprendizaje profundo con mecanismos de atencion puede mejorar la calidad del servicio de guia virtual en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE?
+3. ¿Como impacta la mejora de la precision de localizacion indoor en la calidad del servicio de guia virtual en museos y espacios culturales?
 
 ## Objetivo general
 
-Mejorar la calidad del servicio de guia virtual en museos y espacios culturales mediante un modelo de aprendizaje profundo con mecanismos de atencion aplicado a senales Wi-Fi/BLE para localizacion indoor.
+Mejorar la calidad del servicio de guia virtual en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE en museos y espacios culturales, 2026.
 
 ## Objetivos especificos
 
 1. Analizar el efecto de la variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos sobre la precision de localizacion indoor.
-2. Disenar e implementar un modelo de aprendizaje profundo con mecanismos de atencion para estimar la ubicacion indoor a partir de huellas Wi-Fi/BLE.
-3. Evaluar el impacto del modelo propuesto sobre indicadores de calidad del servicio de guia virtual.
+2. Disenar e implementar un modelo de aprendizaje profundo con mecanismos de atencion para mejorar la calidad del servicio de guia virtual en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE.
+3. Evaluar el impacto de la mejora de la precision de localizacion indoor sobre la calidad del servicio de guia virtual.
 
 ## Hipotesis general
 
-La aplicacion de un modelo de aprendizaje profundo con mecanismos de atencion mejora significativamente la calidad del servicio de guia virtual en museos y espacios culturales al incrementar la precision y robustez de la localizacion indoor basada en senales Wi-Fi/BLE.
+La aplicacion de un modelo de aprendizaje profundo con mecanismos de atencion mejora significativamente la calidad del servicio de guia virtual en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE en museos y espacios culturales, 2026.
 
 ## Hipotesis especificas
 
 1. La variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos reducen significativamente la precision de los sistemas de localizacion indoor basados en Wi-Fi/BLE.
-2. Un modelo de aprendizaje profundo con mecanismos de atencion obtiene mejor desempeno que enfoques base al estimar la ubicacion indoor.
-3. Una mayor precision de localizacion indoor mejora la activacion contextual y la oportunidad del servicio de guia virtual.
+2. Un modelo de aprendizaje profundo con mecanismos de atencion mejora la calidad del servicio de guia virtual frente a enfoques base en servicios de guia virtual con aplicaciones moviles e IoT con senales Wi-Fi/BLE.
+3. Una mayor precision de localizacion indoor mejora la activacion contextual, la oportunidad y la pertinencia del servicio de guia virtual.
 
 ## Variables
 

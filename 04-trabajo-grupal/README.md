@@ -44,6 +44,14 @@ Cada entrega del curso tiene su propia carpeta dentro de `entregables/` y, a su 
 - `entrega/`: archivo final que se mostrara o subira
 - `evidencias/`: capturas, links, comprobantes o material de sustento
 
+Ademas, cada carpeta de entregable incluye un archivo `prompt-notebooklm.md` con un prompt sugerido para NotebookLM. La idea es cargar alli:
+
+- los antecedentes del tema;
+- los avances acumulados hasta esa semana;
+- y, si existe, la presentacion o entrega previa.
+
+Con la salida de NotebookLM luego se puede pedir a Codex que construya la presentacion semanal en `.tex`.
+
 Entregables creados:
 
 - `entregables/semana-02-sistematizacion`
