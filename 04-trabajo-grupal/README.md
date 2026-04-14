@@ -20,6 +20,7 @@ Documento inicial del tema:
 ## Estructura
 
 - `docs/`: avances, revision, lineamientos, matriz y metodologia
+- `entregables/`: organizacion por semanas y entregas formales del curso
 - `datos/`: insumos del proyecto grupal
 - `src/`: codigo fuente o scripts
 - `notebooks/`: exploracion y experimentacion
@@ -33,6 +34,30 @@ Documento inicial del tema:
 - [docs/matriz-de-consistencia.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/04-trabajo-grupal/docs/matriz-de-consistencia.md)
 - [docs/metodologia-base.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/04-trabajo-grupal/docs/metodologia-base.md)
 - [docs/lineamientos/lineamientos-curso.md](C:/Users/pc/Documents/trabajos/cib12-aprendizaje-maquina-mineria-datos/04-trabajo-grupal/docs/lineamientos/lineamientos-curso.md)
+
+## Estructura de entregables
+
+Cada entrega del curso tiene su propia carpeta dentro de `entregables/` y, a su vez, cuatro subcarpetas:
+
+- `fuentes/`: papers, PDFs, capturas, guias y referencias de trabajo
+- `borradores/`: versiones intermedias en `.md`, `.tex`, `.docx` o notas
+- `entrega/`: archivo final que se mostrara o subira
+- `evidencias/`: capturas, links, comprobantes o material de sustento
+
+Entregables creados:
+
+- `entregables/semana-02-sistematizacion`
+- `entregables/semana-03-antecedentes-bibliograficos`
+- `entregables/semana-04-dimensiones-y-diseno`
+- `entregables/semana-05-matriz-de-consistencia`
+- `entregables/semana-06-marco-teorico-y-guia-autores`
+- `entregables/semana-07-metodologia`
+- `entregables/semana-09-recoleccion-de-datos`
+- `entregables/semana-10-experimentos`
+- `entregables/semana-11-resultados-y-discusion`
+- `entregables/semana-12-conclusion-y-resumen`
+- `entregables/semana-13-articulo-y-diapositivas`
+- `entregables/semana-14-traduccion-y-preprint`
 
 ## Logica de trabajo
 

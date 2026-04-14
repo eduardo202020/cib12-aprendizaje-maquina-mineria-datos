@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[table]{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\usepackage{enumitem}
+\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+
+\definecolor{headbg}{RGB}{220,230,241}
+\definecolor{subbg}{RGB}{242,242,242}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Matriz de Consistencia}}\\[0.4em]
+{\normalsize Modelo de aprendizaje profundo con mecanismos de atención para mejorar la calidad del servicio de guía virtual con aplicaciones móviles e IoT con señales Wi-Fi/BLE en museos y espacios culturales}
+\end{center}
+
+\textbf{Línea de investigación:} Inteligencia Artificial y Comunicación Inalámbrica.
+
+\textbf{Problema general:} ¿Cómo mejorar la calidad del servicio de guía virtual en museos y espacios culturales mediante un modelo de aprendizaje profundo con mecanismos de atención aplicado a señales Wi-Fi/BLE para localización indoor durante 2026?
+
+\textbf{Objeto de estudio:} Servicios de guía virtual con aplicaciones móviles e IoT con señales Wi-Fi/BLE en museos y espacios culturales.
+
+\textbf{Objetivo general:} Mejorar la calidad del servicio de guía virtual en museos y espacios culturales mediante un modelo de aprendizaje profundo con mecanismos de atención aplicado a señales Wi-Fi/BLE para localización indoor.
+
+\textbf{Hipótesis general:} La aplicación de un modelo de aprendizaje profundo con mecanismos de atención mejora significativamente la calidad del servicio de guía virtual en museos y espacios culturales al incrementar la precisión y robustez de la localización indoor basada en Wi-Fi/BLE.
+
+\begin{landscape}
+\footnotesize
+
+\rowcolors{2}{white}{subbg}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|p{5.4cm}|p{5.4cm}|p{5.2cm}|p{7.0cm}|}
+\hline
+\rowcolor{headbg}
+\textbf{Problema específico 1} & \textbf{Objetivo específico 1} & \textbf{Hipótesis específica 1} & \textbf{Variables, dimensiones e indicadores relacionados} \\
+\hline
+¿De qué manera la variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos afectan la precisión de localización indoor en servicios de guía virtual?
+&
+Analizar el efecto de la variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos sobre la precisión de localización indoor.
+&
+La variabilidad del RSSI, el multipath y la heterogeneidad de dispositivos reducen significativamente la precisión de los sistemas de localización indoor basados en Wi-Fi/BLE.
+&
+\textbf{Variable dependiente:} Calidad del servicio de guía virtual.\\
+\textbf{Dimensiones:}
+\begin{itemize}[leftmargin=1.1em, itemsep=0.15em, topsep=0.2em]
+\item precisión de localización;
+\item oportunidad de activación;
+\item pertinencia contextual;
+\item continuidad del servicio.
+\end{itemize}
+\textbf{Indicadores:}
+\begin{itemize}[leftmargin=1.1em, itemsep=0.15em, topsep=0.2em]
+\item porcentaje de activaciones correctas;
+\item tiempo de respuesta de la guía;
+\item tasa de error por sala o zona;
+\item porcentaje de sesiones con guía contextual correcta.
+\end{itemize}
+\\
+\hline
+\end{tabular}%
+}
+
+\vspace{0.8em}
+
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|p{5.4cm}|p{5.4cm}|p{5.2cm}|p{7.0cm}|}
+\hline
+\rowcolor{headbg}
+\textbf{Problema específico 2} & \textbf{Objetivo específico 2} & \textbf{Hipótesis específica 2} & \textbf{Variables, dimensiones e indicadores relacionados} \\
+\hline
+¿En qué medida un modelo de aprendizaje profundo con mecanismos de atención puede mejorar la precisión de localización indoor frente a enfoques convencionales o baselines?
+&
+Diseñar e implementar un modelo de aprendizaje profundo con mecanismos de atención para estimar la ubicación indoor a partir de huellas Wi-Fi/BLE.
+&
+Un modelo de aprendizaje profundo con mecanismos de atención obtiene mejor desempeño que enfoques base al estimar la ubicación indoor.
+&
+\textbf{Variable independiente:} Modelo de aprendizaje profundo con mecanismos de atención.\\
+\textbf{Dimensiones:}
+\begin{itemize}[leftmargin=1.1em, itemsep=0.15em, topsep=0.2em]
+\item arquitectura del modelo;
+\item mecanismo de atención;
+\item robustez frente a ruido y heterogeneidad;
+\item capacidad de generalización.
+\end{itemize}
+\textbf{Indicadores:}
+\begin{itemize}[leftmargin=1.1em, itemsep=0.15em, topsep=0.2em]
+\item accuracy de clasificación por zona o sala;
+\item error medio de localización;
+\item F1-score;
+\item estabilidad entre dispositivos o escenarios.
+\end{itemize}
+\\
+\hline
+\end{tabular}%
+}
+
+\vspace{0.8em}
+
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|p{5.4cm}|p{5.4cm}|p{5.2cm}|p{7.0cm}|}
+\hline
+\rowcolor{headbg}
+\textbf{Problema específico 3} & \textbf{Objetivo específico 3} & \textbf{Hipótesis específica 3} & \textbf{Alcances y relación con el estudio} \\
+\hline
+¿Cómo impacta la mejora de la precisión de localización indoor en la calidad del servicio de guía virtual para el visitante?
+&
+Evaluar el impacto del modelo propuesto sobre indicadores de calidad del servicio de guía virtual.
+&
+Una mayor precisión de localización indoor mejora la activación contextual y la oportunidad del servicio de guía virtual.
+&
+\textbf{Objeto de estudio:} Servicios de guía virtual con aplicaciones móviles e IoT con señales Wi-Fi/BLE en museos y espacios culturales.\\
+\textbf{Alcance espacial:} Museos y espacios culturales.\\
+\textbf{Alcance temporal:} 2026.
+\\
+\hline
+\end{tabular}%
+}
+
+\vspace{0.9em}
+
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{|p{5.2cm}|p{18.2cm}|}
+\hline
+\rowcolor{headbg}
+\textbf{Diseño metodológico preliminar} & \textbf{Descripción} \\
+\hline
+Tipo de investigación & Aplicada. \\
+\hline
+Nivel & Explicativo y experimental. \\
+\hline
+Método & Cuantitativo. \\
+\hline
+Diseño & Cuasi experimental con comparación entre baseline y modelo propuesto. \\
+\hline
+Población & Registros de señales Wi-Fi/BLE y sesiones de guía virtual en espacios indoor. \\
+\hline
+Muestra & Subconjunto de huellas o dataset de entrenamiento, validación y prueba. \\
+\hline
+Técnicas de recolección & Captura de fingerprints, registro de RSSI y evaluación del servicio. \\
+\hline
+Técnicas de análisis & Métricas de clasificación/localización y comparación estadística descriptiva. \\
+\hline
+\end{tabular}%
+}
+
+\end{landscape}
+
+\end{document}
