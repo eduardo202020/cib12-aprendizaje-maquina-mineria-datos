@@ -1,0 +1,12 @@
+{"event_id":"evt-001","card_id":"CARD-100","merchant":"market","amount":120.0,"country":"PE","event_time":"2026-05-04T09:00:00","arrival_time":"2026-05-04T09:00:03"}
+{"event_id":"evt-002","card_id":"CARD-100","merchant":"travel","amount":980.0,"country":"PE","event_time":"2026-05-04T09:00:25","arrival_time":"2026-05-04T09:00:28"}
+{"event_id":"evt-003","card_id":"CARD-200","merchant":"fuel","amount":70.0,"country":"PE","event_time":"2026-05-04T09:00:40","arrival_time":"2026-05-04T09:00:41"}
+{"event_id":"evt-004","card_id":"CARD-100","merchant":"electronics","amount":430.0,"country":"CL","event_time":"2026-05-04T09:01:00","arrival_time":"2026-05-04T09:01:02"}
+{"event_id":"evt-005","card_id":"CARD-100","merchant":"luxury","amount":520.0,"country":"CL","event_time":"2026-05-04T09:01:15","arrival_time":"2026-05-04T09:01:16"}
+{"event_id":"evt-006","card_id":"CARD-100","merchant":"luxury","amount":410.0,"country":"CL","event_time":"2026-05-04T09:01:32","arrival_time":"2026-05-04T09:01:34"}
+{"event_id":"evt-007","card_id":"CARD-300","merchant":"pharmacy","amount":40.0,"country":"PE","event_time":"2026-05-04T09:01:40","arrival_time":"2026-05-04T09:01:44"}
+{"event_id":"evt-008","card_id":"CARD-100","merchant":"luxury","amount":410.0,"country":"CL","event_time":"2026-05-04T09:01:32","arrival_time":"2026-05-04T09:01:50"}
+{"event_id":"evt-009","card_id":"CARD-200","merchant":"airline","amount":650.0,"country":"AR","event_time":"2026-05-04T08:59:20","arrival_time":"2026-05-04T09:01:55"}
+{"event_id":"evt-010","card_id":"CARD-300","merchant":"streaming","amount":15.0,"country":"PE","event_time":"2026-05-04T09:02:05","arrival_time":"2026-05-04T09:02:06"}
+{"event_id":"evt-011","card_id":"CARD-400","merchant":"hotel","amount":1100.0,"country":"US","event_time":"2026-05-04T09:02:10","arrival_time":"2026-05-04T09:02:12"}
+{"event_id":"evt-011","card_id":"CARD-400","merchant":"hotel","amount":1100.0,"country":"US","event_time":"2026-05-04T09:02:10","arrival_time":"2026-05-04T09:02:16"}

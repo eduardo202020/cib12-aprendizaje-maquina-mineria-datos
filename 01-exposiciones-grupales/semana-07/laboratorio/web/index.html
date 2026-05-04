@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laboratorio Streaming - Fraude</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Semana 07 · Laboratorio visual</p>
+          <h1>Flujo de fraude con tarjetas en tiempo real</h1>
+          <p class="lede">
+            Vista pedagógica del pipeline inspirado en el capítulo 4:
+            fuente, broker, procesamiento con ventanas y sink de decisiones.
+          </p>
+        </div>
+        <button id="startButton" class="primary">Iniciar simulacion</button>
+      </section>
+
+      <section class="stats" id="stats"></section>
+
+      <section class="pipeline">
+        <article class="stage">
+          <h2>1. Fuente</h2>
+          <p>Eventos de transacciones con `event_time` y `arrival_time`.</p>
+          <div id="currentEvent" class="panel compact"></div>
+        </article>
+        <article class="stage">
+          <h2>2. Broker</h2>
+          <p>Cola intermedia que desacopla productor y procesador.</p>
+          <div id="brokerPanel" class="panel"></div>
+        </article>
+        <article class="stage">
+          <h2>3. Procesador</h2>
+          <p>Reglas con watermark, estado por tarjeta, ventanas y deduplicación.</p>
+          <div id="processorPanel" class="panel compact"></div>
+        </article>
+        <article class="stage">
+          <h2>4. Sink</h2>
+          <p>Decisiones operativas en tiempo real.</p>
+          <div id="sinkPanel" class="panel"></div>
+        </article>
+      </section>
+
+      <section class="tables">
+        <article>
+          <h2>Eventos en el broker</h2>
+          <div id="brokerTable"></div>
+        </article>
+        <article>
+          <h2>Decisiones recientes</h2>
+          <div id="decisionTable"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>
